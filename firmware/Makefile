@@ -4,6 +4,7 @@
 # 7단계: ADC/온도 변환 모듈(adc.c, temp.c) 추가
 # 8단계: 가스 센서 변환 모듈(gas.c) 추가
 # 9단계: 인터럽트 플래그 처리 패턴 호스트 테스트 추가
+# 10단계: Timer0 프리스케일러/OCR0 계산 호스트 테스트 추가
 
 MCU = atmega128
 F_CPU = 16000000UL
@@ -33,8 +34,10 @@ test:
 	./tests/test_temp
 	$(HOST_CC) $(HOST_CFLAGS) -o tests/test_interrupt_flag tests/test_interrupt_flag.c
 	./tests/test_interrupt_flag
+	$(HOST_CC) $(HOST_CFLAGS) -o tests/test_timer_prescaler tests/test_timer_prescaler.c
+	./tests/test_timer_prescaler
 
 clean:
-	rm -f $(TARGET).elf $(TARGET).hex tests/test_debounce tests/test_temp tests/test_interrupt_flag
+	rm -f $(TARGET).elf $(TARGET).hex tests/test_debounce tests/test_temp tests/test_interrupt_flag tests/test_timer_prescaler
 
 .PHONY: all clean test

@@ -6,3 +6,4 @@
 firmware/tests/test_debounce
 firmware/tests/test_temp
 firmware/tests/test_interrupt_flag
+firmware/tests/test_timer_prescaler
