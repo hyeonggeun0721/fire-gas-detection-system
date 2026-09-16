@@ -1,6 +1,6 @@
 /*
  * 화재·가스 감지 자동 대피 유도 시스템 - 메인 진입점
- * 12단계: 화재 판단 알고리즘 및 상태 기계 설계
+ * 13단계: UART 통신 - PC 관제실로 신고 메시지 전송
  *
  * 핀 배치 (docs/architecture.md 참조)
  *   PA0: LED - 정상(녹색)   PA1: LED - 주의(노랑)   PA2: LED - 경보/대피(빨강)
@@ -9,6 +9,7 @@
  *   PD0(INT0): 불꽃 센서 (풀업, 활성 LOW, 하강 엣지 인터럽트)
  *   PD1: 테스트 버튼 (풀업, 활성 LOW) - 강제로 정상 상태로 리셋
  *   PD4: 부저
+ *   PE1(TXD0): UART 송신 (PC 관제실)
  *   PF0(ADC0): 온도 센서   PF1(ADC1): 가스 센서
  *
  * 매 5ms 틱(Timer0)마다 온도/가스 센서를 읽고, 불꽃 감지 플래그와 함께
@@ -17,9 +18,11 @@
  * 갱신한다. 경보/대피 상태의 LED는 하드웨어 예산(2단계 핀맵)상 동일한
  * LED_ALARM 하나를 공유하며, LCD 문구와 부저 패턴, 서보 개폐로 구분한다.
  * 테스트 버튼은 시뮬레이션 시나리오를 위해 강제로 정상 상태로 리셋한다.
+ * 경보/대피 상태에 진입할 때 UART로 PC 관제실에 알림 메시지를 전송한다.
  *
  * 참고: HD44780 내장 폰트 ROM(A00)은 한글을 지원하지 않으므로 LCD 표시 문구는
- * 영문으로 작성한다.
+ * 영문으로 작성하지만, UART는 PC 터미널이 UTF-8을 그대로 표시할 수 있으므로
+ * 관제실 메시지는 한글로 작성한다.
  */
 
 #include <stdio.h>
@@ -35,6 +38,7 @@
 #include "gas.h"
 #include "servo.h"
 #include "fire_logic.h"
+#include "uart.h"
 
 #define TEMP_ADC_CHANNEL 0
 #define GAS_ADC_CHANNEL  1
@@ -108,6 +112,7 @@ static void gpio_init(void)
     adc_init();
     timer0_init();
     servo_init();
+    uart_init();
 }
 
 static void beep(uint8_t count)
@@ -155,6 +160,7 @@ static void show_state(fire_state_t state, int16_t temp_c, uint8_t gas_pct)
             lcd_string("!! ALARM !!");
             lcd_set_cursor(1, 0);
             lcd_string("Stand by");
+            uart_puts("[경보] 가스 또는 온도 임계값 초과, 혹은 불꽃 감지\r\n");
             break;
         case FIRE_STATE_EVACUATE:
             LED_PORT |= LED_ALARM;
@@ -163,6 +169,7 @@ static void show_state(fire_state_t state, int16_t temp_c, uint8_t gas_pct)
             lcd_string("!! EVACUATE !!");
             lcd_set_cursor(1, 0);
             lcd_string("EXIT NOW");
+            uart_puts("[대피] 화재 확정, 비상구 개방 - 즉시 대피 바랍니다\r\n");
             break;
         default:
             break;
