@@ -5,7 +5,7 @@
 # 8단계: 가스 센서 변환 모듈(gas.c) 추가
 # 9단계: 인터럽트 플래그 처리 패턴 호스트 테스트 추가
 # 10단계: Timer0 프리스케일러/OCR0 계산 호스트 테스트 추가
-# 11단계: 서보모터 PWM 모듈(servo.c) 추가
+# 11단계: 서보모터 PWM 모듈(servo.c) 및 각도 변환 호스트 테스트 추가
 
 MCU = atmega128
 F_CPU = 16000000UL
@@ -37,8 +37,10 @@ test:
 	./tests/test_interrupt_flag
 	$(HOST_CC) $(HOST_CFLAGS) -o tests/test_timer_prescaler tests/test_timer_prescaler.c
 	./tests/test_timer_prescaler
+	$(HOST_CC) $(HOST_CFLAGS) -o tests/test_servo_pwm tests/test_servo_pwm.c
+	./tests/test_servo_pwm
 
 clean:
-	rm -f $(TARGET).elf $(TARGET).hex tests/test_debounce tests/test_temp tests/test_interrupt_flag tests/test_timer_prescaler
+	rm -f $(TARGET).elf $(TARGET).hex tests/test_debounce tests/test_temp tests/test_interrupt_flag tests/test_timer_prescaler tests/test_servo_pwm
 
 .PHONY: all clean test

@@ -9,11 +9,13 @@ uint16_t servo_angle_to_ocr1a(uint8_t angle_deg)
 {
     if (angle_deg > SERVO_ANGLE_MAX_DEG) angle_deg = SERVO_ANGLE_MAX_DEG;
 
-    /* BUG: 각도를 PWM 전체 주기(SERVO_TOP, 20ms)에 대한 듀티비로 직접
-     * 매핑했다. 서보모터는 20ms 주기 전체가 아니라 그 안의 1~2ms 펄스
-     * 폭만으로 각도를 해석하므로, 이 계산은 유효 범위를 크게 벗어난
-     * 펄스 폭(예: 90도 -> 약 10ms)을 만들어낸다. */
-    return (uint16_t)(((uint32_t)angle_deg * SERVO_TOP) / SERVO_ANGLE_MAX_DEG);
+    /* 각도를 먼저 서보의 유효 펄스 범위(1000~2000us)로 선형 변환한 뒤,
+     * 그 펄스 폭을 타이머 카운트(마이크로초당 SERVO_TICKS_PER_US틱)로 환산한다.
+     * 서보는 20ms 주기 전체가 아니라 이 좁은 펄스 폭만으로 각도를 해석한다. */
+    uint32_t pulse_us = SERVO_PULSE_MIN_US +
+        ((uint32_t)angle_deg * (SERVO_PULSE_MAX_US - SERVO_PULSE_MIN_US)) / SERVO_ANGLE_MAX_DEG;
+
+    return (uint16_t)(pulse_us * SERVO_TICKS_PER_US);
 }
 
 void servo_init(void)
