@@ -7,7 +7,7 @@ F_CPU = 16000000UL
 CC = avr-gcc
 OBJCOPY = avr-objcopy
 TARGET = main
-SRCS = main.c debounce.c
+SRCS = main.c debounce.c lcd.c
 
 CFLAGS = -Wall -Os -mmcu=$(MCU) -DF_CPU=$(F_CPU)
 
@@ -16,7 +16,7 @@ HOST_CFLAGS = -Wall -Wextra -std=c99
 
 all: $(TARGET).hex
 
-$(TARGET).elf: $(SRCS) debounce.h
+$(TARGET).elf: $(SRCS) debounce.h lcd.h
 	$(CC) $(CFLAGS) -o $(TARGET).elf $(SRCS)
 
 $(TARGET).hex: $(TARGET).elf

@@ -1,20 +1,25 @@
 /*
  * 화재·가스 감지 자동 대피 유도 시스템 - 메인 진입점
- * 5단계: 테스트 버튼 입력 및 디바운싱
+ * 6단계: LCD 디스플레이 연동
  *
  * 핀 배치 (docs/architecture.md 참조)
  *   PA0: LED - 정상(녹색)   PA1: LED - 주의(노랑)   PA2: LED - 경보(빨강)
+ *   PC0-PC5: LCD (RS, E, D4-D7)
  *   PD1: 테스트 버튼 (풀업, 활성 LOW)
  *   PD4: 부저
  *
- * 테스트 버튼을 누를 때마다 정상 -> 주의 -> 경보 -> 정상 순으로 상태가 순환한다.
- * (실제 센서 기반 상태 전이는 12단계에서 구현)
+ * 테스트 버튼을 누를 때마다 정상 -> 주의 -> 경보 -> 정상 순으로 상태가 순환하며
+ * LCD에도 현재 상태 메시지를 표시한다. (실제 센서 기반 상태 전이는 12단계에서 구현)
+ *
+ * 참고: HD44780 내장 폰트 ROM(A00)은 한글을 지원하지 않으므로 LCD 표시 문구는
+ * 영문으로 작성한다.
  */
 
 #include <avr/io.h>
 #include <util/delay.h>
 
 #include "debounce.h"
+#include "lcd.h"
 
 #define LED_PORT PORTA
 #define LED_DDR  DDRA
@@ -44,24 +49,38 @@ static void gpio_init(void)
 
     BUTTON_DDR &= ~BUTTON_PIN;  /* 입력 */
     BUTTON_PORT |= BUTTON_PIN;  /* 내부 풀업 활성화 */
+
+    lcd_init();
 }
 
 static void show_state(system_state_t state)
 {
     LED_PORT &= ~LED_ALL;
+    lcd_clear();
+    lcd_set_cursor(0, 0);
+
     switch (state)
     {
         case STATE_NORMAL:
             LED_PORT |= LED_NORMAL;
+            lcd_string("STATUS: NORMAL");
+            lcd_set_cursor(1, 0);
+            lcd_string("System OK");
             break;
         case STATE_WARNING:
             LED_PORT |= LED_WARNING;
+            lcd_string("STATUS: WARNING");
+            lcd_set_cursor(1, 0);
+            lcd_string("Check sensors");
             break;
         case STATE_ALARM:
             LED_PORT |= LED_ALARM;
             BUZZER_PORT |= BUZZER_PIN;
             _delay_ms(100);
             BUZZER_PORT &= ~BUZZER_PIN;
+            lcd_string("!! FIRE ALARM !!");
+            lcd_set_cursor(1, 0);
+            lcd_string("EVACUATE NOW");
             break;
         default:
             break;
