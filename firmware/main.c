@@ -14,6 +14,8 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
+#include "debounce.h"
+
 #define LED_PORT PORTA
 #define LED_DDR  DDRA
 #define LED_NORMAL   (1 << PA0)
@@ -71,20 +73,23 @@ int main(void)
     gpio_init();
 
     system_state_t state = STATE_NORMAL;
-    uint8_t last_raw = 1;  /* 풀업으로 유휴 상태는 HIGH */
+    debounce_t button_db;
+    debounce_init(&button_db, 1);  /* 풀업으로 유휴 상태는 HIGH */
+    uint8_t last_stable = 1;
     show_state(state);
 
     while (1)
     {
         uint8_t raw = (BUTTON_PIN_REG & BUTTON_PIN) ? 1 : 0;
+        uint8_t stable = debounce_update(&button_db, raw);
 
-        /* 버튼 눌림(HIGH->LOW) 감지 - 디바운싱 없이 원시 신호로 바로 판단 */
-        if (last_raw == 1 && raw == 0)
+        /* 디바운싱된 안정 신호에서 눌림(HIGH->LOW) 엣지만 반응 */
+        if (last_stable == 1 && stable == 0)
         {
             state = (system_state_t)((state + 1) % STATE_COUNT);
             show_state(state);
         }
-        last_raw = raw;
+        last_stable = stable;
 
         _delay_ms(5);
     }

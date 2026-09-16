@@ -3,3 +3,4 @@
 *.hex
 *.obj
 *.o
+firmware/tests/test_debounce
