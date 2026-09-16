@@ -2,10 +2,10 @@
 
 #include "uart.h"
 
-/* BUG: F_CPU=8MHz 클럭을 가정한 예제 코드에서 UBRR 값(9600bps 기준 51)을
- * 그대로 가져왔다. 이 프로젝트는 2단계 아키텍처 설계상 F_CPU=16MHz이므로,
- * 이 값을 쓰면 실제 통신 속도가 의도한 9600bps와 크게 달라진다. */
-#define UART_UBRR 51
+/* F_CPU(2단계 아키텍처 설계상 16MHz)를 기준으로 목표 보드레이트에 필요한
+ * UBRR을 계산한다. 요구사항 명세서 6절의 기본값(9600bps)을 사용한다. */
+#define UART_BAUD 9600UL
+#define UART_UBRR ((F_CPU / 16UL / UART_BAUD) - 1)
 
 void uart_init(void)
 {

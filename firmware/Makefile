@@ -43,8 +43,10 @@ test:
 	./tests/test_servo_pwm
 	$(HOST_CC) $(HOST_CFLAGS) -o tests/test_fire_logic tests/test_fire_logic.c fire_logic.c
 	./tests/test_fire_logic
+	$(HOST_CC) $(HOST_CFLAGS) -o tests/test_uart_baud tests/test_uart_baud.c
+	./tests/test_uart_baud
 
 clean:
-	rm -f $(TARGET).elf $(TARGET).hex tests/test_debounce tests/test_temp tests/test_interrupt_flag tests/test_timer_prescaler tests/test_servo_pwm tests/test_fire_logic
+	rm -f $(TARGET).elf $(TARGET).hex tests/test_debounce tests/test_temp tests/test_interrupt_flag tests/test_timer_prescaler tests/test_servo_pwm tests/test_fire_logic tests/test_uart_baud
 
 .PHONY: all clean test
