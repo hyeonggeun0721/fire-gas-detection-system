@@ -1,7 +1,7 @@
 # 화재·가스 감지 자동 대피 유도 시스템 - 빌드 설정
 # 3단계: 개발 환경 구축
 
-MCU = atmega18
+MCU = atmega128
 F_CPU = 16000000UL
 CC = avr-gcc
 OBJCOPY = avr-objcopy
