@@ -2,13 +2,14 @@
 # 3단계: 개발 환경 구축
 # 5단계: 소스 다중 파일 구성(main.c + debounce.c) 및 호스트용 단위 테스트 타깃 추가
 # 7단계: ADC/온도 변환 모듈(adc.c, temp.c) 추가
+# 8단계: 가스 센서 변환 모듈(gas.c) 추가
 
 MCU = atmega128
 F_CPU = 16000000UL
 CC = avr-gcc
 OBJCOPY = avr-objcopy
 TARGET = main
-SRCS = main.c debounce.c lcd.c adc.c temp.c
+SRCS = main.c debounce.c lcd.c adc.c temp.c gas.c
 
 CFLAGS = -Wall -Os -mmcu=$(MCU) -DF_CPU=$(F_CPU)
 
@@ -17,7 +18,7 @@ HOST_CFLAGS = -Wall -Wextra -std=c99
 
 all: $(TARGET).hex
 
-$(TARGET).elf: $(SRCS) debounce.h lcd.h adc.h temp.h
+$(TARGET).elf: $(SRCS) debounce.h lcd.h adc.h temp.h gas.h
 	$(CC) $(CFLAGS) -o $(TARGET).elf $(SRCS)
 
 $(TARGET).hex: $(TARGET).elf

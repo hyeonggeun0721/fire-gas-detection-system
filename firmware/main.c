@@ -1,17 +1,18 @@
 /*
  * 화재·가스 감지 자동 대피 유도 시스템 - 메인 진입점
- * 7단계: ADC 온도 센서 읽기
+ * 8단계: ADC 가스 센서 읽기 및 다중 채널 전환
  *
  * 핀 배치 (docs/architecture.md 참조)
  *   PA0: LED - 정상(녹색)   PA1: LED - 주의(노랑)   PA2: LED - 경보(빨강)
  *   PC0-PC5: LCD (RS, E, D4-D7)
  *   PD1: 테스트 버튼 (풀업, 활성 LOW)
  *   PD4: 부저
- *   PF0(ADC0): 온도 센서
+ *   PF0(ADC0): 온도 센서   PF1(ADC1): 가스 센서
  *
  * 테스트 버튼을 누를 때마다 정상 -> 주의 -> 경보 -> 정상 순으로 상태가 순환하며
- * LCD에도 현재 상태 메시지를 표시한다. 정상 상태로 진입할 때마다 온도 센서를
- * 읽어 LCD 2행에 표시한다. (실제 센서 기반 자동 상태 전이는 12단계에서 구현)
+ * LCD에도 현재 상태 메시지를 표시한다. 정상 상태로 진입할 때마다 온도 센서(ADC0)와
+ * 가스 센서(ADC1)를 순서대로 읽어 LCD 2행에 함께 표시한다.
+ * (실제 센서 기반 자동 상태 전이는 12단계에서 구현)
  *
  * 참고: HD44780 내장 폰트 ROM(A00)은 한글을 지원하지 않으므로 LCD 표시 문구는
  * 영문으로 작성한다.
@@ -26,8 +27,10 @@
 #include "lcd.h"
 #include "adc.h"
 #include "temp.h"
+#include "gas.h"
 
 #define TEMP_ADC_CHANNEL 0
+#define GAS_ADC_CHANNEL  1
 
 #define LED_PORT PORTA
 #define LED_DDR  DDRA
@@ -77,8 +80,9 @@ static void show_state(system_state_t state)
             lcd_set_cursor(1, 0);
 
             int16_t temp_c = adc_to_temp_c(adc_read(TEMP_ADC_CHANNEL));
+            uint8_t gas_pct = adc_to_gas_percent(adc_read(GAS_ADC_CHANNEL));
             char buf[17];
-            snprintf(buf, sizeof(buf), "TEMP: %d C", temp_c);
+            snprintf(buf, sizeof(buf), "T:%dC G:%u%%", temp_c, gas_pct);
             lcd_string(buf);
             break;
         }
