@@ -6,13 +6,14 @@
 # 9단계: 인터럽트 플래그 처리 패턴 호스트 테스트 추가
 # 10단계: Timer0 프리스케일러/OCR0 계산 호스트 테스트 추가
 # 11단계: 서보모터 PWM 모듈(servo.c) 및 각도 변환 호스트 테스트 추가
+# 12단계: 화재 판단 상태 기계 모듈(fire_logic.c) 및 호스트 테스트 추가
 
 MCU = atmega128
 F_CPU = 16000000UL
 CC = avr-gcc
 OBJCOPY = avr-objcopy
 TARGET = main
-SRCS = main.c debounce.c lcd.c adc.c temp.c gas.c servo.c
+SRCS = main.c debounce.c lcd.c adc.c temp.c gas.c servo.c fire_logic.c
 
 CFLAGS = -Wall -Os -mmcu=$(MCU) -DF_CPU=$(F_CPU)
 
@@ -21,7 +22,7 @@ HOST_CFLAGS = -Wall -Wextra -std=c99
 
 all: $(TARGET).hex
 
-$(TARGET).elf: $(SRCS) debounce.h lcd.h adc.h temp.h gas.h servo.h
+$(TARGET).elf: $(SRCS) debounce.h lcd.h adc.h temp.h gas.h servo.h fire_logic.h
 	$(CC) $(CFLAGS) -o $(TARGET).elf $(SRCS)
 
 $(TARGET).hex: $(TARGET).elf
