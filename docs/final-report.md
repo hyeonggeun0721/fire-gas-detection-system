@@ -70,7 +70,7 @@ firmware/
   buzzer.c/h        # 부저 하드웨어 래퍼
   buzzer_seq.c      # 부저 논블로킹 시퀀서 (순수 로직)
   Makefile
-  tests/            # 호스트(avr 아님) 단위 테스트 7종
+  tests/            # 호스트(avr 아님) 단위 테스트 8종
 ```
 
 순수 로직(하드웨어 레지스터에 의존하지 않는 모듈: debounce, temp, gas,
@@ -82,7 +82,7 @@ fire_logic, buzzer_seq)과 하드웨어 드라이버를 분리해, 시뮬레이�
 ```bash
 cd firmware
 make          # AVR용 main.hex 생성 (avr-gcc 필요)
-make test     # 호스트 단위 테스트 7종 실행 (일반 gcc/cc 사용, 하드웨어 불필요)
+make test     # 호스트 단위 테스트 8종 실행 (일반 gcc/cc 사용, 하드웨어 불필요)
 make clean    # 빌드 산출물 정리
 ```
 
