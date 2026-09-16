@@ -60,11 +60,18 @@ void lcd_init(void)
 
     _delay_ms(20);  /* 전원 안정화 대기 (HD44780 요구: VDD 상승 후 15ms 이상) */
 
-    /* Function Set을 바로 4비트 모드로 전송.
-     * (BUG: 컨트롤러가 리셋 후 8비트 인터페이스를 기본 가정하므로,
-     *  0x3 -> 0x3 -> 0x3 -> 0x2 순서의 웨이크업 니블을 먼저 보내
-     *  4비트 모드로 전환시키는 절차가 반드시 필요함. 이 절차 없이
-     *  바로 명령을 보내면 컨트롤러가 니블을 잘못 정렬해서 해석한다.) */
+    /* HD44780은 리셋 후 8비트 인터페이스를 기본 가정하므로, 4비트 모드로
+     * 전환하려면 데이터시트가 규정한 웨이크업 니블 시퀀스(0x3 x3 -> 0x2)를
+     * 먼저 보내야 한다. RS=0 상태에서 상위 니블만 전송(하위 니블 없이)한다. */
+    lcd_write_nibble(0x03);
+    _delay_ms(5);
+    lcd_write_nibble(0x03);
+    _delay_us(150);
+    lcd_write_nibble(0x03);
+    _delay_us(150);
+    lcd_write_nibble(0x02); /* 4비트 모드로 전환 */
+    _delay_us(150);
+
     lcd_command(0x28); /* Function Set: 4-bit, 2-line, 5x8 font */
     lcd_command(0x0C); /* Display ON, cursor off, blink off */
     lcd_command(0x06); /* Entry mode: increment, no shift */
