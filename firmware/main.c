@@ -1,9 +1,10 @@
 /*
  * 화재·가스 감지 자동 대피 유도 시스템 - 메인 진입점
- * 10단계: 타이머/카운터 기반 주기적 센싱 스케줄링
+ * 11단계: 서보모터 PWM 제어 - 비상구 자동 개방
  *
  * 핀 배치 (docs/architecture.md 참조)
  *   PA0: LED - 정상(녹색)   PA1: LED - 주의(노랑)   PA2: LED - 경보(빨강)
+ *   PB5(OC1A): 서보모터 (비상구)
  *   PC0-PC5: LCD (RS, E, D4-D7)
  *   PD0(INT0): 불꽃 센서 (풀업, 활성 LOW, 하강 엣지 인터럽트)
  *   PD1: 테스트 버튼 (풀업, 활성 LOW)
@@ -13,11 +14,11 @@
  * 테스트 버튼을 누를 때마다 정상 -> 주의 -> 경보 -> 정상 순으로 상태가 순환하며
  * LCD에도 현재 상태 메시지를 표시한다. 정상 상태로 진입할 때마다 온도 센서(ADC0)와
  * 가스 센서(ADC1)를 순서대로 읽어 LCD 2행에 함께 표시한다. 불꽃 센서가 감지되면
- * INT0 인터럽트가 즉시 경보 상태로 전환한다.
+ * INT0 인터럽트가 즉시 경보 상태로 전환한다. 경보 상태에서는 서보모터로 비상구를
+ * 개방하고, 그 외 상태에서는 닫는다.
  *
- * 메인 루프의 샘플링 주기(디바운싱 등이 전제하는 5ms)는 기존에 _delay_ms(5)
- * 소프트웨어 지연으로 맞춰왔는데, 이번 단계부터 Timer0을 CTC 모드로 설정해
- * 하드웨어 타이머 인터럽트로 주기를 맞춘다.
+ * 메인 루프의 샘플링 주기(디바운싱 등이 전제하는 5ms)는 Timer0 CTC 인터럽트로
+ * 맞춘다(10단계).
  *
  * (실제 센서 기반 자동 상태 전이 알고리즘 전체는 12단계에서 구현)
  *
@@ -36,6 +37,7 @@
 #include "adc.h"
 #include "temp.h"
 #include "gas.h"
+#include "servo.h"
 
 #define TEMP_ADC_CHANNEL 0
 #define GAS_ADC_CHANNEL  1
@@ -110,6 +112,7 @@ static void gpio_init(void)
     lcd_init();
     adc_init();
     timer0_init();
+    servo_init();
 }
 
 static void show_state(system_state_t state)
@@ -123,6 +126,7 @@ static void show_state(system_state_t state)
         case STATE_NORMAL:
         {
             LED_PORT |= LED_NORMAL;
+            servo_close();
             lcd_string("STATUS: NORMAL");
             lcd_set_cursor(1, 0);
 
@@ -135,12 +139,14 @@ static void show_state(system_state_t state)
         }
         case STATE_WARNING:
             LED_PORT |= LED_WARNING;
+            servo_close();
             lcd_string("STATUS: WARNING");
             lcd_set_cursor(1, 0);
             lcd_string("Check sensors");
             break;
         case STATE_ALARM:
             LED_PORT |= LED_ALARM;
+            servo_open();
             BUZZER_PORT |= BUZZER_PIN;
             _delay_ms(100);
             BUZZER_PORT &= ~BUZZER_PIN;
