@@ -8,13 +8,15 @@
 # 11단계: 서보모터 PWM 모듈(servo.c) 및 각도 변환 호스트 테스트 추가
 # 12단계: 화재 판단 상태 기계 모듈(fire_logic.c) 및 호스트 테스트 추가
 # 13단계: UART 모듈(uart.c) 및 보드레이트 계산 호스트 테스트 추가
+# 14단계: 논블로킹 부저 시퀀서(buzzer.c) 및 호스트 테스트 추가 (통합 테스트 중 발견한
+#         blocking beep() 문제 해결)
 
 MCU = atmega128
 F_CPU = 16000000UL
 CC = avr-gcc
 OBJCOPY = avr-objcopy
 TARGET = main
-SRCS = main.c debounce.c lcd.c adc.c temp.c gas.c servo.c fire_logic.c uart.c
+SRCS = main.c debounce.c lcd.c adc.c temp.c gas.c servo.c fire_logic.c uart.c buzzer.c buzzer_seq.c
 
 CFLAGS = -Wall -Os -mmcu=$(MCU) -DF_CPU=$(F_CPU)
 
@@ -23,7 +25,7 @@ HOST_CFLAGS = -Wall -Wextra -std=c99
 
 all: $(TARGET).hex
 
-$(TARGET).elf: $(SRCS) debounce.h lcd.h adc.h temp.h gas.h servo.h fire_logic.h uart.h
+$(TARGET).elf: $(SRCS) debounce.h lcd.h adc.h temp.h gas.h servo.h fire_logic.h uart.h buzzer.h
 	$(CC) $(CFLAGS) -o $(TARGET).elf $(SRCS)
 
 $(TARGET).hex: $(TARGET).elf
@@ -45,8 +47,10 @@ test:
 	./tests/test_fire_logic
 	$(HOST_CC) $(HOST_CFLAGS) -o tests/test_uart_baud tests/test_uart_baud.c
 	./tests/test_uart_baud
+	$(HOST_CC) $(HOST_CFLAGS) -o tests/test_buzzer_seq tests/test_buzzer_seq.c buzzer_seq.c
+	./tests/test_buzzer_seq
 
 clean:
-	rm -f $(TARGET).elf $(TARGET).hex tests/test_debounce tests/test_temp tests/test_interrupt_flag tests/test_timer_prescaler tests/test_servo_pwm tests/test_fire_logic tests/test_uart_baud
+	rm -f $(TARGET).elf $(TARGET).hex tests/test_debounce tests/test_temp tests/test_interrupt_flag tests/test_timer_prescaler tests/test_servo_pwm tests/test_fire_logic tests/test_uart_baud tests/test_buzzer_seq
 
 .PHONY: all clean test

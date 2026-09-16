@@ -1,6 +1,6 @@
 /*
  * 화재·가스 감지 자동 대피 유도 시스템 - 메인 진입점
- * 13단계: UART 통신 - PC 관제실로 신고 메시지 전송
+ * 14단계: 통합 테스트 및 시나리오별 시뮬레이션 검증
  *
  * 핀 배치 (docs/architecture.md 참조)
  *   PA0: LED - 정상(녹색)   PA1: LED - 주의(노랑)   PA2: LED - 경보/대피(빨강)
@@ -14,11 +14,14 @@
  *
  * 매 5ms 틱(Timer0)마다 온도/가스 센서를 읽고, 불꽃 감지 플래그와 함께
  * fire_evaluate()(fire_logic.c, docs/requirements.md 5절 기준)에 전달해 다음
- * 상태(정상/주의/경보/대피)를 계산한다. 상태가 바뀔 때만 LED/LCD/부저/서보를
+ * 상태(정상/주의/경보/대피)를 계산한다. 상태가 바뀔 때만 LED/LCD/서보를
  * 갱신한다. 경보/대피 상태의 LED는 하드웨어 예산(2단계 핀맵)상 동일한
  * LED_ALARM 하나를 공유하며, LCD 문구와 부저 패턴, 서보 개폐로 구분한다.
  * 테스트 버튼은 시뮬레이션 시나리오를 위해 강제로 정상 상태로 리셋한다.
  * 경보/대피 상태에 진입할 때 UART로 PC 관제실에 알림 메시지를 전송한다.
+ *
+ * 부저는 buzzer_tick()으로 매 5ms 틱마다 논블로킹으로 재생한다(14단계에서
+ * _delay_ms() 기반 blocking beep()을 교체 - docs/test-scenarios.md 참조).
  *
  * 참고: HD44780 내장 폰트 ROM(A00)은 한글을 지원하지 않으므로 LCD 표시 문구는
  * 영문으로 작성하지만, UART는 PC 터미널이 UTF-8을 그대로 표시할 수 있으므로
@@ -29,7 +32,6 @@
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
-#include <util/delay.h>
 
 #include "debounce.h"
 #include "lcd.h"
@@ -39,6 +41,7 @@
 #include "servo.h"
 #include "fire_logic.h"
 #include "uart.h"
+#include "buzzer.h"
 
 #define TEMP_ADC_CHANNEL 0
 #define GAS_ADC_CHANNEL  1
@@ -60,10 +63,6 @@
 #define LED_WARNING  (1 << PA1)
 #define LED_ALARM    (1 << PA2)
 #define LED_ALL      (LED_NORMAL | LED_WARNING | LED_ALARM)
-
-#define BUZZER_PORT PORTD
-#define BUZZER_DDR  DDRD
-#define BUZZER_PIN  (1 << PD4)
 
 #define BUTTON_DDR      DDRD
 #define BUTTON_PORT     PORTD
@@ -93,8 +92,7 @@ static void timer0_init(void)
 
 static void gpio_init(void)
 {
-    BUZZER_DDR |= BUZZER_PIN;
-    BUZZER_PORT &= ~BUZZER_PIN;
+    buzzer_init();
 
     LED_DDR |= LED_ALL;
     LED_PORT &= ~LED_ALL;
@@ -113,17 +111,6 @@ static void gpio_init(void)
     timer0_init();
     servo_init();
     uart_init();
-}
-
-static void beep(uint8_t count)
-{
-    for (uint8_t i = 0; i < count; i++)
-    {
-        BUZZER_PORT |= BUZZER_PIN;
-        _delay_ms(100);
-        BUZZER_PORT &= ~BUZZER_PIN;
-        _delay_ms(100);
-    }
 }
 
 static void show_state(fire_state_t state, int16_t temp_c, uint8_t gas_pct)
@@ -148,7 +135,7 @@ static void show_state(fire_state_t state, int16_t temp_c, uint8_t gas_pct)
         case FIRE_STATE_WARNING:
             LED_PORT |= LED_WARNING;
             servo_close();
-            beep(1);
+            buzzer_start(1);
             lcd_string("STATUS: WARNING");
             lcd_set_cursor(1, 0);
             lcd_string("High temp!");
@@ -156,7 +143,7 @@ static void show_state(fire_state_t state, int16_t temp_c, uint8_t gas_pct)
         case FIRE_STATE_ALARM:
             LED_PORT |= LED_ALARM;
             servo_close();
-            beep(1);
+            buzzer_start(1);
             lcd_string("!! ALARM !!");
             lcd_set_cursor(1, 0);
             lcd_string("Stand by");
@@ -165,7 +152,7 @@ static void show_state(fire_state_t state, int16_t temp_c, uint8_t gas_pct)
         case FIRE_STATE_EVACUATE:
             LED_PORT |= LED_ALARM;
             servo_open();
-            beep(3);
+            buzzer_start(3);
             lcd_string("!! EVACUATE !!");
             lcd_set_cursor(1, 0);
             lcd_string("EXIT NOW");
@@ -196,6 +183,8 @@ int main(void)
             /* Timer0 비교 일치 인터럽트가 다음 틱을 알릴 때까지 대기 */
         }
         tick_flag = 0;
+
+        buzzer_tick();  /* 논블로킹으로 부저 패턴을 한 틱 진행 */
 
         int16_t temp_c = adc_to_temp_c(adc_read(TEMP_ADC_CHANNEL));
         uint8_t gas_pct = adc_to_gas_percent(adc_read(GAS_ADC_CHANNEL));

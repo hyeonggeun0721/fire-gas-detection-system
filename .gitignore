@@ -10,3 +10,4 @@ firmware/tests/test_timer_prescaler
 firmware/tests/test_servo_pwm
 firmware/tests/test_fire_logic
 firmware/tests/test_uart_baud
+firmware/tests/test_buzzer_seq
