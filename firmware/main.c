@@ -45,9 +45,9 @@
 #define FLAME_PIN  (1 << PD0)
 
 /* Timer0 CTC 기반 5ms(200Hz) 틱 생성.
- * BUG: 프리스케일러 64는 16MHz에서 5ms 주기를 만들기에는 너무 세밀해서,
- * 필요한 비교값(OCR0)이 8비트 레지스터 범위(0~255)를 넘어선다. */
-#define TIMER0_PRESCALER 64
+ * 프리스케일러 1024를 사용해야 16MHz에서 5ms 주기의 비교값(OCR0)이
+ * 8비트 레지스터 범위(0~255) 안에 들어온다. */
+#define TIMER0_PRESCALER 1024
 #define TIMER0_TARGET_HZ 200  /* 5ms 주기 */
 #define TIMER0_OCR (F_CPU / TIMER0_PRESCALER / TIMER0_TARGET_HZ - 1)
 
@@ -86,7 +86,7 @@ ISR(TIMER0_COMP_vect)
 static void timer0_init(void)
 {
     OCR0 = TIMER0_OCR;
-    TCCR0 = (1 << WGM01) | (1 << CS02);  /* CTC 모드, 분주비 64 (CS02:00 = 100) */
+    TCCR0 = (1 << WGM01) | (1 << CS02) | (1 << CS01) | (1 << CS00);  /* CTC 모드, 분주비 1024 (CS02:00 = 111) */
     TIMSK |= (1 << OCIE0);               /* 비교 일치 인터럽트 활성화 */
 }
 
