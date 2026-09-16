@@ -27,6 +27,9 @@ static void gpio_init(void)
     BUZZER_DDR |= BUZZER_PIN;
     BUZZER_PORT &= ~BUZZER_PIN;
 
+    /* LED 핀도 출력으로 설정 */
+    LED_DDR |= LED_ALL;
+
     /* LED 포트는 항상 꺼진 상태로 시작 */
     LED_PORT &= ~LED_ALL;
 }
