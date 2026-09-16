@@ -1,6 +1,6 @@
 /*
  * 화재·가스 감지 자동 대피 유도 시스템 - 메인 진입점
- * 9단계: 불꽃 센서(디지털 입력) 및 외부 인터럽트 처리
+ * 10단계: 타이머/카운터 기반 주기적 센싱 스케줄링
  *
  * 핀 배치 (docs/architecture.md 참조)
  *   PA0: LED - 정상(녹색)   PA1: LED - 주의(노랑)   PA2: LED - 경보(빨강)
@@ -14,6 +14,11 @@
  * LCD에도 현재 상태 메시지를 표시한다. 정상 상태로 진입할 때마다 온도 센서(ADC0)와
  * 가스 센서(ADC1)를 순서대로 읽어 LCD 2행에 함께 표시한다. 불꽃 센서가 감지되면
  * INT0 인터럽트가 즉시 경보 상태로 전환한다.
+ *
+ * 메인 루프의 샘플링 주기(디바운싱 등이 전제하는 5ms)는 기존에 _delay_ms(5)
+ * 소프트웨어 지연으로 맞춰왔는데, 이번 단계부터 Timer0을 CTC 모드로 설정해
+ * 하드웨어 타이머 인터럽트로 주기를 맞춘다.
+ *
  * (실제 센서 기반 자동 상태 전이 알고리즘 전체는 12단계에서 구현)
  *
  * 참고: HD44780 내장 폰트 ROM(A00)은 한글을 지원하지 않으므로 LCD 표시 문구는
@@ -39,6 +44,13 @@
 #define FLAME_PORT PORTD
 #define FLAME_PIN  (1 << PD0)
 
+/* Timer0 CTC 기반 5ms(200Hz) 틱 생성.
+ * BUG: 프리스케일러 64는 16MHz에서 5ms 주기를 만들기에는 너무 세밀해서,
+ * 필요한 비교값(OCR0)이 8비트 레지스터 범위(0~255)를 넘어선다. */
+#define TIMER0_PRESCALER 64
+#define TIMER0_TARGET_HZ 200  /* 5ms 주기 */
+#define TIMER0_OCR (F_CPU / TIMER0_PRESCALER / TIMER0_TARGET_HZ - 1)
+
 #define LED_PORT PORTA
 #define LED_DDR  DDRA
 #define LED_NORMAL   (1 << PA0)
@@ -59,10 +71,23 @@ typedef enum { STATE_NORMAL = 0, STATE_WARNING, STATE_ALARM, STATE_COUNT } syste
 
 /* ISR에서 설정되고 메인 루프에서 읽는 값이므로 volatile로 선언 */
 static volatile uint8_t flame_detected = 0;
+static volatile uint8_t tick_flag = 0;
 
 ISR(INT0_vect)
 {
     flame_detected = 1;
+}
+
+ISR(TIMER0_COMP_vect)
+{
+    tick_flag = 1;
+}
+
+static void timer0_init(void)
+{
+    OCR0 = TIMER0_OCR;
+    TCCR0 = (1 << WGM01) | (1 << CS02);  /* CTC 모드, 분주비 64 (CS02:00 = 100) */
+    TIMSK |= (1 << OCIE0);               /* 비교 일치 인터럽트 활성화 */
 }
 
 static void gpio_init(void)
@@ -84,6 +109,7 @@ static void gpio_init(void)
 
     lcd_init();
     adc_init();
+    timer0_init();
 }
 
 static void show_state(system_state_t state)
@@ -161,6 +187,10 @@ int main(void)
         }
         last_stable = stable;
 
-        _delay_ms(5);
+        while (!tick_flag)
+        {
+            /* Timer0 비교 일치 인터럽트가 다음 틱을 알릴 때까지 대기 */
+        }
+        tick_flag = 0;
     }
 }
