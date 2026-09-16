@@ -10,11 +10,9 @@ fire_state_t fire_evaluate(fire_state_t prev_state, int16_t temp_c, uint8_t gas_
 
     fire_state_t next;
 
-    /* BUG: 요구사항 명세서 5절은 "가스 임계값 초과 또는 불꽃 감지" 둘 중 하나만
-     * 만족해도 경보라고 정의하는데, 여기서는 gas_high 조건만 확인하고
-     * flame_detected 조건이 빠져 있다. 불꽃이 감지돼도 온도/가스가 낮으면
-     * 정상 상태로 남아있게 된다. */
-    if (gas_high)
+    /* 요구사항 명세서 5절: "가스 임계값 초과 또는 불꽃 감지" 둘 중 하나만
+     * 만족해도 경보로 판단한다. */
+    if (gas_high || flame_detected)
     {
         next = FIRE_STATE_ALARM;
     }

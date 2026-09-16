@@ -40,8 +40,10 @@ test:
 	./tests/test_timer_prescaler
 	$(HOST_CC) $(HOST_CFLAGS) -o tests/test_servo_pwm tests/test_servo_pwm.c
 	./tests/test_servo_pwm
+	$(HOST_CC) $(HOST_CFLAGS) -o tests/test_fire_logic tests/test_fire_logic.c fire_logic.c
+	./tests/test_fire_logic
 
 clean:
-	rm -f $(TARGET).elf $(TARGET).hex tests/test_debounce tests/test_temp tests/test_interrupt_flag tests/test_timer_prescaler tests/test_servo_pwm
+	rm -f $(TARGET).elf $(TARGET).hex tests/test_debounce tests/test_temp tests/test_interrupt_flag tests/test_timer_prescaler tests/test_servo_pwm tests/test_fire_logic
 
 .PHONY: all clean test
