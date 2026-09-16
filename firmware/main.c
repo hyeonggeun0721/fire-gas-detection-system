@@ -172,7 +172,11 @@ int main(void)
     debounce_t button_db;
     debounce_init(&button_db, 1);  /* 풀업으로 유휴 상태는 HIGH */
     uint8_t last_stable = 1;
-    show_state(state, 0, 0);
+
+    /* 초기 화면에 실제 센서값을 표시하도록, 첫 틱을 기다리지 않고 한 번 읽어둔다 */
+    int16_t initial_temp_c = adc_to_temp_c(adc_read(TEMP_ADC_CHANNEL));
+    uint8_t initial_gas_pct = adc_to_gas_percent(adc_read(GAS_ADC_CHANNEL));
+    show_state(state, initial_temp_c, initial_gas_pct);
 
     sei();  /* 전역 인터럽트 활성화 */
 
