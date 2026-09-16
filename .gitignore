@@ -4,3 +4,4 @@
 *.obj
 *.o
 firmware/tests/test_debounce
+firmware/tests/test_temp
