@@ -3,6 +3,7 @@
 # 5단계: 소스 다중 파일 구성(main.c + debounce.c) 및 호스트용 단위 테스트 타깃 추가
 # 7단계: ADC/온도 변환 모듈(adc.c, temp.c) 추가
 # 8단계: 가스 센서 변환 모듈(gas.c) 추가
+# 9단계: 인터럽트 플래그 처리 패턴 호스트 테스트 추가
 
 MCU = atmega128
 F_CPU = 16000000UL
@@ -30,8 +31,10 @@ test:
 	./tests/test_debounce
 	$(HOST_CC) $(HOST_CFLAGS) -o tests/test_temp tests/test_temp.c temp.c
 	./tests/test_temp
+	$(HOST_CC) $(HOST_CFLAGS) -o tests/test_interrupt_flag tests/test_interrupt_flag.c
+	./tests/test_interrupt_flag
 
 clean:
-	rm -f $(TARGET).elf $(TARGET).hex tests/test_debounce tests/test_temp
+	rm -f $(TARGET).elf $(TARGET).hex tests/test_debounce tests/test_temp tests/test_interrupt_flag
 
 .PHONY: all clean test

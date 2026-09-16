@@ -143,9 +143,9 @@ int main(void)
     {
         if (flame_detected)
         {
-            /* 불꽃 감지 시 즉시 경보 상태로 전환.
-             * BUG: 처리 후 flame_detected 플래그를 리셋하지 않아, 최초
-             * 감지 이후 루프가 도는 동안 계속 이 블록이 실행된다. */
+            /* 불꽃 감지 시 즉시 경보 상태로 전환. 처리 후에는 반드시 플래그를
+             * 리셋해, 동일한 감지 이벤트가 반복 처리되지 않도록 한다. */
+            flame_detected = 0;
             state = STATE_ALARM;
             show_state(state);
         }
