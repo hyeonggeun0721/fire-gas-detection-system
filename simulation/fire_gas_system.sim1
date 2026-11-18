@@ -42,93 +42,145 @@
 
 <item itemtype="Tunnel" CircId="Tunnel-1039" mainComp="false" Show_id="false" Show_Val="false" Pos="176,80" rotation="0" hflip="-1" vflip="1" label="Tunnel-1039" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="LCD_D7" IsBus="false" />
 
-<item itemtype="Rail" CircId="Rail-901" mainComp="false" Show_id="false" Show_Val="true" Pos="-320,-220" rotation="0" hflip="1" vflip="1" label="5V" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" ShowProp="Voltage" Voltage="5 V" />
+<item itemtype="Rail" CircId="Rail-901" mainComp="false" Show_id="false" Show_Val="true" Pos="344,328" rotation="0" hflip="1" vflip="1" label="5V" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" ShowProp="Voltage" Voltage="5 V" />
 
-<item itemtype="Tunnel" CircId="Tunnel-1041" mainComp="false" Show_id="false" Show_Val="false" Pos="-288,-220" rotation="0" hflip="-1" vflip="1" label="Tunnel-1041" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="VCC" IsBus="false" />
+<item itemtype="Tunnel" CircId="Tunnel-1041" mainComp="false" Show_id="false" Show_Val="false" Pos="376,328" rotation="0" hflip="-1" vflip="1" label="Tunnel-1041" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="VCC" IsBus="false" />
 
-<item itemtype="Ground" CircId="Ground-902" mainComp="false" Show_id="false" Show_Val="false" Pos="-320,-140" rotation="0" hflip="1" vflip="1" label="Ground-902" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" />
+<item itemtype="Ground" CircId="Ground-902" mainComp="false" Show_id="false" Show_Val="false" Pos="472,344" rotation="0" hflip="1" vflip="1" label="Ground-902" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" />
 
-<item itemtype="Tunnel" CircId="Tunnel-1043" mainComp="false" Show_id="false" Show_Val="false" Pos="-320,-172" rotation="90" hflip="1" vflip="1" label="Tunnel-1043" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="GND" IsBus="false" />
+<item itemtype="Tunnel" CircId="Tunnel-1043" mainComp="false" Show_id="false" Show_Val="false" Pos="472,312" rotation="90" hflip="1" vflip="1" label="Tunnel-1043" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="GND" IsBus="false" />
 
-<item itemtype="Potentiometer" CircId="Potentiometer-903" mainComp="false" Show_id="true" Show_Val="true" Pos="-200,-220" rotation="0" hflip="1" vflip="1" label="Temp sensor" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" ShowProp="Resistance" Resistance="10 kΩ" Value_Ohm="400 Ω" Slider="false" Scale="1" />
+<item itemtype="Potentiometer" CircId="Potentiometer-903" mainComp="false" Show_id="true" Show_Val="true" Pos="-240,-200" rotation="0" hflip="1" vflip="1" label="온도 TEMP" idLabPos="-64,-36" labelrot="0" valLabPos="0,0" valLabRot="0" ShowProp="Resistance" Resistance="10 kΩ" Value_Ohm="400 Ω" Slider="false" Scale="1" />
 
-<item itemtype="Tunnel" CircId="Tunnel-1045" mainComp="false" Show_id="false" Show_Val="false" Pos="-232,-220" rotation="0" hflip="1" vflip="1" label="Tunnel-1045" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="GND" IsBus="false" />
+<item itemtype="Tunnel" CircId="Tunnel-1045" mainComp="false" Show_id="false" Show_Val="false" Pos="-272,-200" rotation="0" hflip="1" vflip="1" label="Tunnel-1045" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="GND" IsBus="false" />
 
-<item itemtype="Tunnel" CircId="Tunnel-1047" mainComp="false" Show_id="false" Show_Val="false" Pos="-168,-220" rotation="0" hflip="-1" vflip="1" label="Tunnel-1047" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="VCC" IsBus="false" />
+<item itemtype="Tunnel" CircId="Tunnel-1047" mainComp="false" Show_id="false" Show_Val="false" Pos="-208,-200" rotation="0" hflip="-1" vflip="1" label="Tunnel-1047" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="VCC" IsBus="false" />
 
-<item itemtype="Tunnel" CircId="Tunnel-1049" mainComp="false" Show_id="false" Show_Val="false" Pos="-200,-188" rotation="-90" hflip="1" vflip="1" label="Tunnel-1049" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="TEMP" IsBus="false" />
+<item itemtype="Tunnel" CircId="Tunnel-1049" mainComp="false" Show_id="false" Show_Val="false" Pos="-240,-168" rotation="-90" hflip="1" vflip="1" label="Tunnel-1049" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="TEMP" IsBus="false" />
 
-<item itemtype="Potentiometer" CircId="Potentiometer-904" mainComp="false" Show_id="true" Show_Val="true" Pos="-60,-220" rotation="0" hflip="1" vflip="1" label="Gas sensor" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" ShowProp="Resistance" Resistance="10 kΩ" Value_Ohm="1000 Ω" Slider="false" Scale="1" />
+<item itemtype="Potentiometer" CircId="Potentiometer-904" mainComp="false" Show_id="true" Show_Val="true" Pos="-100,-200" rotation="0" hflip="1" vflip="1" label="가스 GAS" idLabPos="-64,-36" labelrot="0" valLabPos="0,0" valLabRot="0" ShowProp="Resistance" Resistance="10 kΩ" Value_Ohm="1000 Ω" Slider="false" Scale="1" />
 
-<item itemtype="Tunnel" CircId="Tunnel-1051" mainComp="false" Show_id="false" Show_Val="false" Pos="-92,-220" rotation="0" hflip="1" vflip="1" label="Tunnel-1051" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="GND" IsBus="false" />
+<item itemtype="Tunnel" CircId="Tunnel-1051" mainComp="false" Show_id="false" Show_Val="false" Pos="-132,-200" rotation="0" hflip="1" vflip="1" label="Tunnel-1051" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="GND" IsBus="false" />
 
-<item itemtype="Tunnel" CircId="Tunnel-1053" mainComp="false" Show_id="false" Show_Val="false" Pos="-28,-220" rotation="0" hflip="-1" vflip="1" label="Tunnel-1053" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="VCC" IsBus="false" />
+<item itemtype="Tunnel" CircId="Tunnel-1053" mainComp="false" Show_id="false" Show_Val="false" Pos="-68,-200" rotation="0" hflip="-1" vflip="1" label="Tunnel-1053" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="VCC" IsBus="false" />
 
-<item itemtype="Tunnel" CircId="Tunnel-1055" mainComp="false" Show_id="false" Show_Val="false" Pos="-60,-188" rotation="-90" hflip="1" vflip="1" label="Tunnel-1055" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="GAS" IsBus="false" />
+<item itemtype="Tunnel" CircId="Tunnel-1055" mainComp="false" Show_id="false" Show_Val="false" Pos="-100,-168" rotation="-90" hflip="1" vflip="1" label="Tunnel-1055" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="GAS" IsBus="false" />
 
-<item itemtype="Led" CircId="Led-905" mainComp="false" Show_id="true" Show_Val="false" Pos="280,-220" rotation="0" hflip="1" vflip="1" label="Green" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Color="Green" Grounded="true" Threshold="2.4 V" MaxCurrent="0.03 A" Resistance="50 Ω" />
+<item itemtype="Led" CircId="Led-905" mainComp="false" Show_id="true" Show_Val="false" Pos="216,-200" rotation="0" hflip="1" vflip="1" label="정상 NORMAL" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Color="Green" Grounded="true" Threshold="2.4 V" MaxCurrent="0.03 A" Resistance="50 Ω" />
 
-<item itemtype="Tunnel" CircId="Tunnel-1057" mainComp="false" Show_id="false" Show_Val="false" Pos="248,-220" rotation="0" hflip="1" vflip="1" label="Tunnel-1057" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="LED_G" IsBus="false" />
+<item itemtype="Tunnel" CircId="Tunnel-1057" mainComp="false" Show_id="false" Show_Val="false" Pos="184,-200" rotation="0" hflip="1" vflip="1" label="Tunnel-1057" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="LED_G" IsBus="false" />
 
-<item itemtype="Led" CircId="Led-906" mainComp="false" Show_id="true" Show_Val="false" Pos="360,-220" rotation="0" hflip="1" vflip="1" label="Yellow" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Color="Yellow" Grounded="true" Threshold="2.4 V" MaxCurrent="0.03 A" Resistance="50 Ω" />
+<item itemtype="Led" CircId="Led-906" mainComp="false" Show_id="true" Show_Val="false" Pos="304,-200" rotation="0" hflip="1" vflip="1" label="주의 WARNING" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Color="Yellow" Grounded="true" Threshold="2.4 V" MaxCurrent="0.03 A" Resistance="50 Ω" />
 
-<item itemtype="Tunnel" CircId="Tunnel-1059" mainComp="false" Show_id="false" Show_Val="false" Pos="328,-220" rotation="0" hflip="1" vflip="1" label="Tunnel-1059" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="LED_Y" IsBus="false" />
+<item itemtype="Tunnel" CircId="Tunnel-1059" mainComp="false" Show_id="false" Show_Val="false" Pos="272,-200" rotation="0" hflip="1" vflip="1" label="Tunnel-1059" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="LED_Y" IsBus="false" />
 
-<item itemtype="Led" CircId="Led-907" mainComp="false" Show_id="true" Show_Val="false" Pos="440,-220" rotation="0" hflip="1" vflip="1" label="Red" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Color="Red" Grounded="true" Threshold="2.4 V" MaxCurrent="0.03 A" Resistance="50 Ω" />
+<item itemtype="Led" CircId="Led-907" mainComp="false" Show_id="true" Show_Val="false" Pos="392,-200" rotation="0" hflip="1" vflip="1" label="화재 FIRE" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Color="Red" Grounded="true" Threshold="2.4 V" MaxCurrent="0.03 A" Resistance="50 Ω" />
 
-<item itemtype="Tunnel" CircId="Tunnel-1061" mainComp="false" Show_id="false" Show_Val="false" Pos="408,-220" rotation="0" hflip="1" vflip="1" label="Tunnel-1061" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="LED_R" IsBus="false" />
+<item itemtype="Tunnel" CircId="Tunnel-1061" mainComp="false" Show_id="false" Show_Val="false" Pos="360,-200" rotation="0" hflip="1" vflip="1" label="Tunnel-1061" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="LED_R" IsBus="false" />
 
-<item itemtype="Push" CircId="Push-908" mainComp="false" Show_id="true" Show_Val="false" Pos="-200,300" rotation="0" hflip="1" vflip="1" label="Flame (PD0)" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Norm_Close="false" Poles="1" />
+<item itemtype="Push" CircId="Push-908" mainComp="false" Show_id="true" Show_Val="false" Pos="24,-200" rotation="0" hflip="1" vflip="1" label="불꽃 FLAME" idLabPos="-24,-32" labelrot="0" valLabPos="0,0" valLabRot="0" Norm_Close="false" Poles="1" />
 
-<item itemtype="Tunnel" CircId="Tunnel-1063" mainComp="false" Show_id="false" Show_Val="false" Pos="-232,300" rotation="0" hflip="1" vflip="1" label="Tunnel-1063" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="GND" IsBus="false" />
+<item itemtype="Tunnel" CircId="Tunnel-1063" mainComp="false" Show_id="false" Show_Val="false" Pos="-8,-200" rotation="0" hflip="1" vflip="1" label="Tunnel-1063" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="GND" IsBus="false" />
 
-<item itemtype="Tunnel" CircId="Tunnel-1065" mainComp="false" Show_id="false" Show_Val="false" Pos="-168,300" rotation="0" hflip="-1" vflip="1" label="Tunnel-1065" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="FLAME" IsBus="false" />
+<item itemtype="Tunnel" CircId="Tunnel-1065" mainComp="false" Show_id="false" Show_Val="false" Pos="56,-200" rotation="0" hflip="-1" vflip="1" label="Tunnel-1065" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="FLAME" IsBus="false" />
 
-<item itemtype="Push" CircId="Push-909" mainComp="false" Show_id="true" Show_Val="false" Pos="-40,300" rotation="0" hflip="1" vflip="1" label="Test/Reset (PD1)" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Norm_Close="false" Poles="1" />
+<item itemtype="Push" CircId="Push-909" mainComp="false" Show_id="true" Show_Val="false" Pos="-216,328" rotation="0" hflip="1" vflip="1" label="복구 RESET" idLabPos="-24,-32" labelrot="0" valLabPos="0,0" valLabRot="0" Norm_Close="false" Poles="1" />
 
-<item itemtype="Tunnel" CircId="Tunnel-1067" mainComp="false" Show_id="false" Show_Val="false" Pos="-72,300" rotation="0" hflip="1" vflip="1" label="Tunnel-1067" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="GND" IsBus="false" />
+<item itemtype="Tunnel" CircId="Tunnel-1067" mainComp="false" Show_id="false" Show_Val="false" Pos="-248,328" rotation="0" hflip="1" vflip="1" label="Tunnel-1067" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="GND" IsBus="false" />
 
-<item itemtype="Tunnel" CircId="Tunnel-1069" mainComp="false" Show_id="false" Show_Val="false" Pos="-8,300" rotation="0" hflip="-1" vflip="1" label="Tunnel-1069" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="BTN" IsBus="false" />
+<item itemtype="Tunnel" CircId="Tunnel-1069" mainComp="false" Show_id="false" Show_Val="false" Pos="-184,328" rotation="0" hflip="-1" vflip="1" label="Tunnel-1069" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="BTN" IsBus="false" />
 
-<item itemtype="Hd44780" CircId="Hd44780-910" mainComp="false" Show_id="true" Show_Val="false" Pos="340,140" rotation="0" hflip="1" vflip="1" label="LCD 16x2" idLabPos="81,-80" labelrot="0" valLabPos="0,0" valLabRot="0" Rows="2" Cols="16" />
+<item itemtype="Hd44780" CircId="Hd44780-910" mainComp="false" Show_id="true" Show_Val="false" Pos="304,136" rotation="0" hflip="1" vflip="1" label="상태 표시창 LCD" idLabPos="81,-80" labelrot="0" valLabPos="0,0" valLabRot="0" Rows="2" Cols="16" />
 
-<item itemtype="Tunnel" CircId="Tunnel-1071" mainComp="false" Show_id="false" Show_Val="false" Pos="356,164" rotation="-90" hflip="1" vflip="1" label="Tunnel-1071" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="LCD_RS" IsBus="false" />
+<item itemtype="Tunnel" CircId="Tunnel-1071" mainComp="false" Show_id="false" Show_Val="false" Pos="320,160" rotation="-90" hflip="1" vflip="1" label="Tunnel-1071" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="LCD_RS" IsBus="false" />
 
-<item itemtype="Tunnel" CircId="Tunnel-1073" mainComp="false" Show_id="false" Show_Val="false" Pos="364,164" rotation="-90" hflip="1" vflip="1" label="Tunnel-1073" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="GND" IsBus="false" />
+<item itemtype="Tunnel" CircId="Tunnel-1073" mainComp="false" Show_id="false" Show_Val="false" Pos="328,160" rotation="-90" hflip="1" vflip="1" label="Tunnel-1073" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="GND" IsBus="false" />
 
-<item itemtype="Tunnel" CircId="Tunnel-1075" mainComp="false" Show_id="false" Show_Val="false" Pos="372,164" rotation="-90" hflip="1" vflip="1" label="Tunnel-1075" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="LCD_E" IsBus="false" />
+<item itemtype="Tunnel" CircId="Tunnel-1075" mainComp="false" Show_id="false" Show_Val="false" Pos="336,160" rotation="-90" hflip="1" vflip="1" label="Tunnel-1075" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="LCD_E" IsBus="false" />
 
-<item itemtype="Tunnel" CircId="Tunnel-1077" mainComp="false" Show_id="false" Show_Val="false" Pos="412,164" rotation="-90" hflip="1" vflip="1" label="Tunnel-1077" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="LCD_D4" IsBus="false" />
+<item itemtype="Tunnel" CircId="Tunnel-1077" mainComp="false" Show_id="false" Show_Val="false" Pos="376,160" rotation="-90" hflip="1" vflip="1" label="Tunnel-1077" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="LCD_D4" IsBus="false" />
 
-<item itemtype="Tunnel" CircId="Tunnel-1079" mainComp="false" Show_id="false" Show_Val="false" Pos="420,164" rotation="-90" hflip="1" vflip="1" label="Tunnel-1079" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="LCD_D5" IsBus="false" />
+<item itemtype="Tunnel" CircId="Tunnel-1079" mainComp="false" Show_id="false" Show_Val="false" Pos="384,160" rotation="-90" hflip="1" vflip="1" label="Tunnel-1079" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="LCD_D5" IsBus="false" />
 
-<item itemtype="Tunnel" CircId="Tunnel-1081" mainComp="false" Show_id="false" Show_Val="false" Pos="428,164" rotation="-90" hflip="1" vflip="1" label="Tunnel-1081" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="LCD_D6" IsBus="false" />
+<item itemtype="Tunnel" CircId="Tunnel-1081" mainComp="false" Show_id="false" Show_Val="false" Pos="392,160" rotation="-90" hflip="1" vflip="1" label="Tunnel-1081" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="LCD_D6" IsBus="false" />
 
-<item itemtype="Tunnel" CircId="Tunnel-1083" mainComp="false" Show_id="false" Show_Val="false" Pos="436,164" rotation="-90" hflip="1" vflip="1" label="Tunnel-1083" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="LCD_D7" IsBus="false" />
+<item itemtype="Tunnel" CircId="Tunnel-1083" mainComp="false" Show_id="false" Show_Val="false" Pos="400,160" rotation="-90" hflip="1" vflip="1" label="Tunnel-1083" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="LCD_D7" IsBus="false" />
 
-<item itemtype="Servo" CircId="Servo-911" mainComp="false" Show_id="true" Show_Val="false" Pos="-160,60" rotation="0" hflip="1" vflip="1" label="Exit door servo" idLabPos="-16,-40" labelrot="0" valLabPos="0,0" valLabRot="0" Speed="0.2 _s/60º" MinPulse="1000 _µs" MaxPulse="2000 _µs" />
+<item itemtype="Servo" CircId="Servo-911" mainComp="false" Show_id="true" Show_Val="false" Pos="-176,72" rotation="0" hflip="1" vflip="1" label="비상구 개폐 서보" idLabPos="-40,-56" labelrot="0" valLabPos="0,0" valLabRot="0" Speed="0.2 _s/60º" MinPulse="1000 _µs" MaxPulse="2000 _µs" />
 
-<item itemtype="Tunnel" CircId="Tunnel-1085" mainComp="false" Show_id="false" Show_Val="false" Pos="-224,44" rotation="0" hflip="1" vflip="1" label="Tunnel-1085" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="VCC" IsBus="false" />
+<item itemtype="Tunnel" CircId="Tunnel-1085" mainComp="false" Show_id="false" Show_Val="false" Pos="-240,56" rotation="0" hflip="1" vflip="1" label="Tunnel-1085" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="VCC" IsBus="false" />
 
-<item itemtype="Tunnel" CircId="Tunnel-1087" mainComp="false" Show_id="false" Show_Val="false" Pos="-224,60" rotation="0" hflip="1" vflip="1" label="Tunnel-1087" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="GND" IsBus="false" />
+<item itemtype="Tunnel" CircId="Tunnel-1087" mainComp="false" Show_id="false" Show_Val="false" Pos="-240,72" rotation="0" hflip="1" vflip="1" label="Tunnel-1087" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="GND" IsBus="false" />
 
-<item itemtype="Tunnel" CircId="Tunnel-1089" mainComp="false" Show_id="false" Show_Val="false" Pos="-224,76" rotation="0" hflip="1" vflip="1" label="Tunnel-1089" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="SERVO" IsBus="false" />
+<item itemtype="Tunnel" CircId="Tunnel-1089" mainComp="false" Show_id="false" Show_Val="false" Pos="-240,88" rotation="0" hflip="1" vflip="1" label="Tunnel-1089" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="SERVO" IsBus="false" />
 
-<item itemtype="AudioOut" CircId="AudioOut-912" mainComp="false" Show_id="true" Show_Val="false" Pos="120,300" rotation="0" hflip="1" vflip="1" label="Buzzer" idLabPos="-12,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Buzzer="true" Impedance="8 Ω" />
+<item itemtype="AudioOut" CircId="AudioOut-912" mainComp="false" Show_id="true" Show_Val="false" Pos="88,328" rotation="0" hflip="1" vflip="1" label="경종 BUZZER" idLabPos="-24,-40" labelrot="0" valLabPos="0,0" valLabRot="0" Buzzer="true" Impedance="8 Ω" />
 
-<item itemtype="Tunnel" CircId="Tunnel-1091" mainComp="false" Show_id="false" Show_Val="false" Pos="88,292" rotation="0" hflip="1" vflip="1" label="Tunnel-1091" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="BUZ" IsBus="false" />
+<item itemtype="Tunnel" CircId="Tunnel-1091" mainComp="false" Show_id="false" Show_Val="false" Pos="56,320" rotation="0" hflip="1" vflip="1" label="Tunnel-1091" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="BUZ" IsBus="false" />
 
-<item itemtype="Tunnel" CircId="Tunnel-1093" mainComp="false" Show_id="false" Show_Val="false" Pos="88,300" rotation="0" hflip="1" vflip="1" label="Tunnel-1093" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="GND" IsBus="false" />
+<item itemtype="Tunnel" CircId="Tunnel-1093" mainComp="false" Show_id="false" Show_Val="false" Pos="56,328" rotation="0" hflip="1" vflip="1" label="Tunnel-1093" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="GND" IsBus="false" />
 
-<item itemtype="Led" CircId="Led-913" mainComp="false" Show_id="true" Show_Val="false" Pos="240,300" rotation="0" hflip="1" vflip="1" label="Buzzer LED" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Color="Orange" Grounded="true" Threshold="2.4 V" MaxCurrent="0.03 A" Resistance="50 Ω" />
+<item itemtype="Led" CircId="Led-913" mainComp="false" Show_id="true" Show_Val="false" Pos="480,-200" rotation="0" hflip="1" vflip="1" label="경종 BELL" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Color="Orange" Grounded="true" Threshold="2.4 V" MaxCurrent="0.03 A" Resistance="50 Ω" />
 
-<item itemtype="Tunnel" CircId="Tunnel-1095" mainComp="false" Show_id="false" Show_Val="false" Pos="208,300" rotation="0" hflip="1" vflip="1" label="Tunnel-1095" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="BUZ" IsBus="false" />
+<item itemtype="Tunnel" CircId="Tunnel-1095" mainComp="false" Show_id="false" Show_Val="false" Pos="448,-200" rotation="0" hflip="1" vflip="1" label="Tunnel-1095" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="BUZ" IsBus="false" />
 
-<item itemtype="SerialTerm" CircId="SerialTerm-914" mainComp="false" Show_id="true" Show_Val="false" Pos="-360,140" rotation="0" hflip="-1" vflip="1" label="PC control room" idLabPos="-20,-32" labelrot="0" valLabPos="0,0" valLabRot="0" Baudrate="9600 _Bauds" DataBits="8 _Bits" StopBits="1 _Bits" SerialMon="true" />
+<item itemtype="SerialTerm" CircId="SerialTerm-914" mainComp="false" Show_id="true" Show_Val="false" Pos="-488,72" rotation="0" hflip="-1" vflip="1" label="관제실 PC" idLabPos="-20,-32" labelrot="0" valLabPos="0,0" valLabRot="0" Baudrate="9600 _Bauds" DataBits="8 _Bits" StopBits="1 _Bits" SerialMon="true" />
 
-<item itemtype="Tunnel" CircId="Tunnel-1097" mainComp="false" Show_id="false" Show_Val="false" Pos="-320,132" rotation="0" hflip="-1" vflip="1" label="Tunnel-1097" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="RXD" IsBus="false" />
+<item itemtype="Tunnel" CircId="Tunnel-1097" mainComp="false" Show_id="false" Show_Val="false" Pos="-448,64" rotation="0" hflip="-1" vflip="1" label="Tunnel-1097" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="RXD" IsBus="false" />
 
-<item itemtype="Tunnel" CircId="Tunnel-1099" mainComp="false" Show_id="false" Show_Val="false" Pos="-320,148" rotation="0" hflip="-1" vflip="1" label="Tunnel-1099" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="TXD" IsBus="false" />
+<item itemtype="Tunnel" CircId="Tunnel-1099" mainComp="false" Show_id="false" Show_Val="false" Pos="-448,80" rotation="0" hflip="-1" vflip="1" label="Tunnel-1099" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Name="TXD" IsBus="false" />
+
+<item itemtype="Rectangle" CircId="Rectangle-801" mainComp="false" Show_id="false" Show_Val="false" Pos="132,36" rotation="0" hflip="1" vflip="1" label="Rectangle-801" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" H_size="936 _px" V_size="760 _px" Border="3 _px" Z_Value="-3" Color="#c62828" Opacity="1" />
+
+<item itemtype="Rectangle" CircId="Rectangle-802" mainComp="false" Show_id="false" Show_Val="false" Pos="132,-308" rotation="0" hflip="1" vflip="1" label="Rectangle-802" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" H_size="904 _px" V_size="56 _px" Border="1 _px" Z_Value="-2.5" Color="#7f0000" Opacity="1" />
+
+<item itemtype="TextComponent" CircId="TextComponent-803" mainComp="false" Show_id="false" Show_Val="false" Pos="-308,-334" rotation="0" hflip="1" vflip="1" label="TextComponent-803" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Margin="2 _px" Border="0 _px" Color="#ffffff" Opacity="0" Font="Apple SD Gothic Neo" Font_Color="#ffffff" Font_Size="20 _px" Fixed_Width="false" Text="화재 수신반   FIRE ALARM CONTROL PANEL" />
+
+<item itemtype="TextComponent" CircId="TextComponent-804" mainComp="false" Show_id="false" Show_Val="false" Pos="-306,-304" rotation="0" hflip="1" vflip="1" label="TextComponent-804" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Margin="2 _px" Border="0 _px" Color="#ffffff" Opacity="0" Font="Apple SD Gothic Neo" Font_Color="#ffcdd2" Font_Size="11 _px" Fixed_Width="false" Text="화재·가스 감지 자동 대피 유도 시스템  |  ATmega128 @16MHz  |  P형 1회로" />
+
+<item itemtype="Rectangle" CircId="Rectangle-805" mainComp="false" Show_id="false" Show_Val="false" Pos="-100,-204" rotation="0" hflip="1" vflip="1" label="Rectangle-805" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" H_size="440 _px" V_size="136 _px" Border="1 _px" Z_Value="-2" Color="#f4f1e8" Opacity="1" />
+
+<item itemtype="TextComponent" CircId="TextComponent-806" mainComp="false" Show_id="false" Show_Val="false" Pos="-314,-268" rotation="0" hflip="1" vflip="1" label="TextComponent-806" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Margin="2 _px" Border="0 _px" Color="#ffffff" Opacity="0" Font="Apple SD Gothic Neo" Font_Color="#8b0000" Font_Size="11 _px" Fixed_Width="false" Text="① 감지기 DETECTORS — 온도 · 가스 · 불꽃" />
+
+<item itemtype="Rectangle" CircId="Rectangle-807" mainComp="false" Show_id="false" Show_Val="false" Pos="360,-204" rotation="0" hflip="1" vflip="1" label="Rectangle-807" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" H_size="448 _px" V_size="136 _px" Border="1 _px" Z_Value="-2" Color="#f4f1e8" Opacity="1" />
+
+<item itemtype="TextComponent" CircId="TextComponent-808" mainComp="false" Show_id="false" Show_Val="false" Pos="142,-268" rotation="0" hflip="1" vflip="1" label="TextComponent-808" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Margin="2 _px" Border="0 _px" Color="#ffffff" Opacity="0" Font="Apple SD Gothic Neo" Font_Color="#8b0000" Font_Size="11 _px" Fixed_Width="false" Text="② 표시등 INDICATORS" />
+
+<item itemtype="Rectangle" CircId="Rectangle-809" mainComp="false" Show_id="false" Show_Val="false" Pos="-212,64" rotation="0" hflip="1" vflip="1" label="Rectangle-809" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" H_size="216 _px" V_size="368 _px" Border="1 _px" Z_Value="-2" Color="#f4f1e8" Opacity="1" />
+
+<item itemtype="TextComponent" CircId="TextComponent-810" mainComp="false" Show_id="false" Show_Val="false" Pos="-314,-116" rotation="0" hflip="1" vflip="1" label="TextComponent-810" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Margin="2 _px" Border="0 _px" Color="#ffffff" Opacity="0" Font="Apple SD Gothic Neo" Font_Color="#8b0000" Font_Size="11 _px" Fixed_Width="false" Text="③ 비상구 EXIT DOOR" />
+
+<item itemtype="Rectangle" CircId="Rectangle-811" mainComp="false" Show_id="false" Show_Val="false" Pos="80,64" rotation="0" hflip="1" vflip="1" label="Rectangle-811" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" H_size="336 _px" V_size="368 _px" Border="1 _px" Z_Value="-2" Color="#f4f1e8" Opacity="1" />
+
+<item itemtype="TextComponent" CircId="TextComponent-812" mainComp="false" Show_id="false" Show_Val="false" Pos="-82,-116" rotation="0" hflip="1" vflip="1" label="TextComponent-812" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Margin="2 _px" Border="0 _px" Color="#ffffff" Opacity="0" Font="Apple SD Gothic Neo" Font_Color="#8b0000" Font_Size="11 _px" Fixed_Width="false" Text="④ 제어부 CONTROLLER (MCU)" />
+
+<item itemtype="Rectangle" CircId="Rectangle-813" mainComp="false" Show_id="false" Show_Val="false" Pos="424,64" rotation="0" hflip="1" vflip="1" label="Rectangle-813" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" H_size="320 _px" V_size="368 _px" Border="1 _px" Z_Value="-2" Color="#f4f1e8" Opacity="1" />
+
+<item itemtype="TextComponent" CircId="TextComponent-814" mainComp="false" Show_id="false" Show_Val="false" Pos="270,-116" rotation="0" hflip="1" vflip="1" label="TextComponent-814" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Margin="2 _px" Border="0 _px" Color="#ffffff" Opacity="0" Font="Apple SD Gothic Neo" Font_Color="#8b0000" Font_Size="11 _px" Fixed_Width="false" Text="⑤ 상태 표시창 DISPLAY" />
+
+<item itemtype="Rectangle" CircId="Rectangle-815" mainComp="false" Show_id="false" Show_Val="false" Pos="132,332" rotation="0" hflip="1" vflip="1" label="Rectangle-815" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" H_size="904 _px" V_size="136 _px" Border="1 _px" Z_Value="-2" Color="#f4f1e8" Opacity="1" />
+
+<item itemtype="TextComponent" CircId="TextComponent-816" mainComp="false" Show_id="false" Show_Val="false" Pos="-314,268" rotation="0" hflip="1" vflip="1" label="TextComponent-816" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Margin="2 _px" Border="0 _px" Color="#ffffff" Opacity="0" Font="Apple SD Gothic Neo" Font_Color="#8b0000" Font_Size="11 _px" Fixed_Width="false" Text="⑥ 조작부 · 경종 · 전원  OPERATION" />
+
+<item itemtype="TextComponent" CircId="TextComponent-817" mainComp="false" Show_id="false" Show_Val="false" Pos="-292,-84" rotation="0" hflip="1" vflip="1" label="TextComponent-817" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Margin="4 _px" Border="1 _px" Color="#1b8a3a" Opacity="1" Font="Apple SD Gothic Neo" Font_Color="#ffffff" Font_Size="14 _px" Fixed_Width="false" Text="  비상구  EXIT  " />
+
+<item itemtype="TextComponent" CircId="TextComponent-818" mainComp="false" Show_id="false" Show_Val="false" Pos="-300,160" rotation="0" hflip="1" vflip="1" label="TextComponent-818" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Margin="2 _px" Border="0 _px" Color="#ffffff" Opacity="0" Font="Apple SD Gothic Neo" Font_Color="#333333" Font_Size="10 _px" Fixed_Width="false" Text="화재 확정 시 서보 90° → 문 개방" />
+
+<item itemtype="TextComponent" CircId="TextComponent-819" mainComp="false" Show_id="false" Show_Val="false" Pos="142,-252" rotation="0" hflip="1" vflip="1" label="TextComponent-819" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Margin="2 _px" Border="0 _px" Color="#ffffff" Opacity="0" Font="Apple SD Gothic Neo" Font_Color="#333333" Font_Size="10 _px" Fixed_Width="false" Text="녹=정상  황=온도 주의  적=가스·불꽃 경보/대피  주황=경종" />
+
+<item itemtype="TextComponent" CircId="TextComponent-820" mainComp="false" Show_id="false" Show_Val="false" Pos="-314,-252" rotation="0" hflip="1" vflip="1" label="TextComponent-820" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Margin="2 _px" Border="0 _px" Color="#ffffff" Opacity="0" Font="Apple SD Gothic Neo" Font_Color="#333333" Font_Size="10 _px" Fixed_Width="false" Text="다이얼: 온도 1000Ω↑=주의 · 가스 6000Ω↑=경보   버튼: 불꽃 감지" />
+
+<item itemtype="TextComponent" CircId="TextComponent-821" mainComp="false" Show_id="false" Show_Val="false" Pos="276,210" rotation="0" hflip="1" vflip="1" label="TextComponent-821" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Margin="2 _px" Border="0 _px" Color="#ffffff" Opacity="0" Font="Apple SD Gothic Neo" Font_Color="#333333" Font_Size="10 _px" Fixed_Width="false" Text="1행: 상태  /  2행: 온도·가스 값" />
+
+<item itemtype="TextComponent" CircId="TextComponent-822" mainComp="false" Show_id="false" Show_Val="false" Pos="-308,370" rotation="0" hflip="1" vflip="1" label="TextComponent-822" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Margin="2 _px" Border="0 _px" Color="#ffffff" Opacity="0" Font="Apple SD Gothic Neo" Font_Color="#333333" Font_Size="10 _px" Fixed_Width="false" Text="[복구] 경보·대피 해제 → 정상" />
+
+<item itemtype="Rectangle" CircId="Rectangle-823" mainComp="false" Show_id="false" Show_Val="false" Pos="-476,64" rotation="0" hflip="1" vflip="1" label="Rectangle-823" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" H_size="248 _px" V_size="368 _px" Border="1 _px" Z_Value="-2" Color="#e3e7ec" Opacity="1" />
+
+<item itemtype="TextComponent" CircId="TextComponent-824" mainComp="false" Show_id="false" Show_Val="false" Pos="-594,-116" rotation="0" hflip="1" vflip="1" label="TextComponent-824" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Margin="2 _px" Border="0 _px" Color="#ffffff" Opacity="0" Font="Apple SD Gothic Neo" Font_Color="#1f3a5f" Font_Size="11 _px" Fixed_Width="false" Text="⑦ 관제실 CONTROL ROOM" />
+
+<item itemtype="TextComponent" CircId="TextComponent-825" mainComp="false" Show_id="false" Show_Val="false" Pos="300,370" rotation="0" hflip="1" vflip="1" label="TextComponent-825" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Margin="2 _px" Border="0 _px" Color="#ffffff" Opacity="0" Font="Apple SD Gothic Neo" Font_Color="#333333" Font_Size="10 _px" Fixed_Width="false" Text="전원 5V / GND" />
+
+<item itemtype="TextComponent" CircId="TextComponent-826" mainComp="false" Show_id="false" Show_Val="false" Pos="-594,150" rotation="0" hflip="1" vflip="1" label="TextComponent-826" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Margin="2 _px" Border="0 _px" Color="#ffffff" Opacity="0" Font="Apple SD Gothic Neo" Font_Color="#333333" Font_Size="10 _px" Fixed_Width="false" Text="UART 9600bps&#xa;경보·대피 메시지 수신" />
 
 <item itemtype="Connector" uid="Connector-1002" startpinid="mega128-1-RST" endpinid="Tunnel-1001-pin" pointList="40,160,40,176" />
 
@@ -170,64 +222,64 @@
 
 <item itemtype="Connector" uid="Connector-1040" startpinid="mega128-1-PORTC5" endpinid="Tunnel-1039-pin" pointList="160,80,176,80" />
 
-<item itemtype="Connector" uid="Connector-1042" startpinid="Rail-901-outnod" endpinid="Tunnel-1041-pin" pointList="-304,-220,-288,-220" />
+<item itemtype="Connector" uid="Connector-1042" startpinid="Rail-901-outnod" endpinid="Tunnel-1041-pin" pointList="360,328,376,328" />
 
-<item itemtype="Connector" uid="Connector-1044" startpinid="Ground-902-Gnd" endpinid="Tunnel-1043-pin" pointList="-320,-156,-320,-172" />
+<item itemtype="Connector" uid="Connector-1044" startpinid="Ground-902-Gnd" endpinid="Tunnel-1043-pin" pointList="472,328,472,312" />
 
-<item itemtype="Connector" uid="Connector-1046" startpinid="Potentiometer-903-PinA" endpinid="Tunnel-1045-pin" pointList="-216,-220,-232,-220" />
+<item itemtype="Connector" uid="Connector-1046" startpinid="Potentiometer-903-PinA" endpinid="Tunnel-1045-pin" pointList="-256,-200,-272,-200" />
 
-<item itemtype="Connector" uid="Connector-1048" startpinid="Potentiometer-903-PinB" endpinid="Tunnel-1047-pin" pointList="-184,-220,-168,-220" />
+<item itemtype="Connector" uid="Connector-1048" startpinid="Potentiometer-903-PinB" endpinid="Tunnel-1047-pin" pointList="-224,-200,-208,-200" />
 
-<item itemtype="Connector" uid="Connector-1050" startpinid="Potentiometer-903-PinM" endpinid="Tunnel-1049-pin" pointList="-200,-204,-200,-188" />
+<item itemtype="Connector" uid="Connector-1050" startpinid="Potentiometer-903-PinM" endpinid="Tunnel-1049-pin" pointList="-240,-184,-240,-168" />
 
-<item itemtype="Connector" uid="Connector-1052" startpinid="Potentiometer-904-PinA" endpinid="Tunnel-1051-pin" pointList="-76,-220,-92,-220" />
+<item itemtype="Connector" uid="Connector-1052" startpinid="Potentiometer-904-PinA" endpinid="Tunnel-1051-pin" pointList="-116,-200,-132,-200" />
 
-<item itemtype="Connector" uid="Connector-1054" startpinid="Potentiometer-904-PinB" endpinid="Tunnel-1053-pin" pointList="-44,-220,-28,-220" />
+<item itemtype="Connector" uid="Connector-1054" startpinid="Potentiometer-904-PinB" endpinid="Tunnel-1053-pin" pointList="-84,-200,-68,-200" />
 
-<item itemtype="Connector" uid="Connector-1056" startpinid="Potentiometer-904-PinM" endpinid="Tunnel-1055-pin" pointList="-60,-204,-60,-188" />
+<item itemtype="Connector" uid="Connector-1056" startpinid="Potentiometer-904-PinM" endpinid="Tunnel-1055-pin" pointList="-100,-184,-100,-168" />
 
-<item itemtype="Connector" uid="Connector-1058" startpinid="Led-905-lPin" endpinid="Tunnel-1057-pin" pointList="264,-220,248,-220" />
+<item itemtype="Connector" uid="Connector-1058" startpinid="Led-905-lPin" endpinid="Tunnel-1057-pin" pointList="200,-200,184,-200" />
 
-<item itemtype="Connector" uid="Connector-1060" startpinid="Led-906-lPin" endpinid="Tunnel-1059-pin" pointList="344,-220,328,-220" />
+<item itemtype="Connector" uid="Connector-1060" startpinid="Led-906-lPin" endpinid="Tunnel-1059-pin" pointList="288,-200,272,-200" />
 
-<item itemtype="Connector" uid="Connector-1062" startpinid="Led-907-lPin" endpinid="Tunnel-1061-pin" pointList="424,-220,408,-220" />
+<item itemtype="Connector" uid="Connector-1062" startpinid="Led-907-lPin" endpinid="Tunnel-1061-pin" pointList="376,-200,360,-200" />
 
-<item itemtype="Connector" uid="Connector-1064" startpinid="Push-908-pinP0" endpinid="Tunnel-1063-pin" pointList="-216,300,-232,300" />
+<item itemtype="Connector" uid="Connector-1064" startpinid="Push-908-pinP0" endpinid="Tunnel-1063-pin" pointList="8,-200,-8,-200" />
 
-<item itemtype="Connector" uid="Connector-1066" startpinid="Push-908-switch0pinN" endpinid="Tunnel-1065-pin" pointList="-184,300,-168,300" />
+<item itemtype="Connector" uid="Connector-1066" startpinid="Push-908-switch0pinN" endpinid="Tunnel-1065-pin" pointList="40,-200,56,-200" />
 
-<item itemtype="Connector" uid="Connector-1068" startpinid="Push-909-pinP0" endpinid="Tunnel-1067-pin" pointList="-56,300,-72,300" />
+<item itemtype="Connector" uid="Connector-1068" startpinid="Push-909-pinP0" endpinid="Tunnel-1067-pin" pointList="-232,328,-248,328" />
 
-<item itemtype="Connector" uid="Connector-1070" startpinid="Push-909-switch0pinN" endpinid="Tunnel-1069-pin" pointList="-24,300,-8,300" />
+<item itemtype="Connector" uid="Connector-1070" startpinid="Push-909-switch0pinN" endpinid="Tunnel-1069-pin" pointList="-200,328,-184,328" />
 
-<item itemtype="Connector" uid="Connector-1072" startpinid="Hd44780-910-PinRS" endpinid="Tunnel-1071-pin" pointList="356,148,356,164" />
+<item itemtype="Connector" uid="Connector-1072" startpinid="Hd44780-910-PinRS" endpinid="Tunnel-1071-pin" pointList="320,144,320,160" />
 
-<item itemtype="Connector" uid="Connector-1074" startpinid="Hd44780-910-PinRW" endpinid="Tunnel-1073-pin" pointList="364,148,364,164" />
+<item itemtype="Connector" uid="Connector-1074" startpinid="Hd44780-910-PinRW" endpinid="Tunnel-1073-pin" pointList="328,144,328,160" />
 
-<item itemtype="Connector" uid="Connector-1076" startpinid="Hd44780-910-PinEn" endpinid="Tunnel-1075-pin" pointList="372,148,372,164" />
+<item itemtype="Connector" uid="Connector-1076" startpinid="Hd44780-910-PinEn" endpinid="Tunnel-1075-pin" pointList="336,144,336,160" />
 
-<item itemtype="Connector" uid="Connector-1078" startpinid="Hd44780-910-dataPin4" endpinid="Tunnel-1077-pin" pointList="412,148,412,164" />
+<item itemtype="Connector" uid="Connector-1078" startpinid="Hd44780-910-dataPin4" endpinid="Tunnel-1077-pin" pointList="376,144,376,160" />
 
-<item itemtype="Connector" uid="Connector-1080" startpinid="Hd44780-910-dataPin5" endpinid="Tunnel-1079-pin" pointList="420,148,420,164" />
+<item itemtype="Connector" uid="Connector-1080" startpinid="Hd44780-910-dataPin5" endpinid="Tunnel-1079-pin" pointList="384,144,384,160" />
 
-<item itemtype="Connector" uid="Connector-1082" startpinid="Hd44780-910-dataPin6" endpinid="Tunnel-1081-pin" pointList="428,148,428,164" />
+<item itemtype="Connector" uid="Connector-1082" startpinid="Hd44780-910-dataPin6" endpinid="Tunnel-1081-pin" pointList="392,144,392,160" />
 
-<item itemtype="Connector" uid="Connector-1084" startpinid="Hd44780-910-dataPin7" endpinid="Tunnel-1083-pin" pointList="436,148,436,164" />
+<item itemtype="Connector" uid="Connector-1084" startpinid="Hd44780-910-dataPin7" endpinid="Tunnel-1083-pin" pointList="400,144,400,160" />
 
-<item itemtype="Connector" uid="Connector-1086" startpinid="Servo-911-in0" endpinid="Tunnel-1085-pin" pointList="-208,44,-224,44" />
+<item itemtype="Connector" uid="Connector-1086" startpinid="Servo-911-in0" endpinid="Tunnel-1085-pin" pointList="-224,56,-240,56" />
 
-<item itemtype="Connector" uid="Connector-1088" startpinid="Servo-911-in1" endpinid="Tunnel-1087-pin" pointList="-208,60,-224,60" />
+<item itemtype="Connector" uid="Connector-1088" startpinid="Servo-911-in1" endpinid="Tunnel-1087-pin" pointList="-224,72,-240,72" />
 
-<item itemtype="Connector" uid="Connector-1090" startpinid="Servo-911-in2" endpinid="Tunnel-1089-pin" pointList="-208,76,-224,76" />
+<item itemtype="Connector" uid="Connector-1090" startpinid="Servo-911-in2" endpinid="Tunnel-1089-pin" pointList="-224,88,-240,88" />
 
-<item itemtype="Connector" uid="Connector-1092" startpinid="AudioOut-912-lPin" endpinid="Tunnel-1091-pin" pointList="104,292,88,292" />
+<item itemtype="Connector" uid="Connector-1092" startpinid="AudioOut-912-lPin" endpinid="Tunnel-1091-pin" pointList="72,320,56,320" />
 
-<item itemtype="Connector" uid="Connector-1094" startpinid="AudioOut-912-rPin" endpinid="Tunnel-1093-pin" pointList="104,300,88,300" />
+<item itemtype="Connector" uid="Connector-1094" startpinid="AudioOut-912-rPin" endpinid="Tunnel-1093-pin" pointList="72,328,56,328" />
 
-<item itemtype="Connector" uid="Connector-1096" startpinid="Led-913-lPin" endpinid="Tunnel-1095-pin" pointList="224,300,208,300" />
+<item itemtype="Connector" uid="Connector-1096" startpinid="Led-913-lPin" endpinid="Tunnel-1095-pin" pointList="464,-200,448,-200" />
 
-<item itemtype="Connector" uid="Connector-1098" startpinid="SerialTerm-914-pin0" endpinid="Tunnel-1097-pin" pointList="-336,132,-320,132" />
+<item itemtype="Connector" uid="Connector-1098" startpinid="SerialTerm-914-pin0" endpinid="Tunnel-1097-pin" pointList="-464,64,-448,64" />
 
-<item itemtype="Connector" uid="Connector-1100" startpinid="SerialTerm-914-pin1" endpinid="Tunnel-1099-pin" pointList="-336,148,-320,148" />
+<item itemtype="Connector" uid="Connector-1100" startpinid="SerialTerm-914-pin1" endpinid="Tunnel-1099-pin" pointList="-464,80,-448,80" />
 
 </circuit>

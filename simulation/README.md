@@ -11,6 +11,26 @@ MCU에는 `../firmware/main.hex`가 자동으로 로드되도록 설정했습니
 
 `simulation` 폴더를 옮기면 hex 경로가 깨집니다. 저장소 안에서 `firmware` 폴더와 나란히 두세요.
 
+## 외형 (화재 수신반 패널)
+
+![화재 수신반 외형](../docs/images/simulide/09_fire_alarm_panel.jpg)
+
+실제 화재 수신반처럼 보이도록 빨간 캐비닛과 구역 패널을 씌웠습니다. 패널·글자는 SimulIDE의
+Rectangle·TextComponent(그래픽 부품)라 **전기적으로는 아무 영향이 없습니다.**
+
+| 구역 | 들어 있는 부품 |
+|---|---|
+| ① 감지기 DETECTORS | 온도·가스 가변저항, 불꽃 버튼(PD0) |
+| ② 표시등 INDICATORS | 정상(녹)·주의(황)·화재(적) LED, 경종 LED(주황) |
+| ③ 비상구 EXIT DOOR | 비상구 표지, 개폐 서보 |
+| ④ 제어부 CONTROLLER | ATmega128 |
+| ⑤ 상태 표시창 DISPLAY | 16x2 LCD |
+| ⑥ 조작부·경종·전원 | 복구 버튼(PD1), 부저, 5V·GND |
+| ⑦ 관제실 (캐비닛 밖) | 시리얼 터미널 = 119 자동 신고 수신 PC |
+
+패널 위치를 바꾸고 싶으면 패널(사각형)을 드래그하면 됩니다. 부품을 옮겨도 터널 연결은 유지됩니다.
+시리얼 모니터 창이 회로를 가리면 창을 옆으로 옮기거나 닫았다가 관제실 PC의 **Open**을 누르세요.
+
 ## 배선 방식
 
 전선을 길게 끌지 않고 **같은 이름의 터널(Tunnel)끼리 연결**되는 방식으로 만들었습니다.
@@ -18,10 +38,10 @@ MCU에는 `../firmware/main.hex`가 자동으로 로드되도록 설정했습니
 
 | 터널 이름 | MCU 핀 | 연결 부품 |
 |---|---|---|
-| TEMP | PF0 (ADC0) | Temp sensor 가변저항 가운데 핀 |
-| GAS | PF1 (ADC1) | Gas sensor 가변저항 가운데 핀 |
-| FLAME | PD0 (INT0) | Flame 푸시버튼 (반대쪽은 GND, 내부 풀업 사용) |
-| BTN | PD1 (INT1) | Test/Reset 푸시버튼 (반대쪽은 GND) |
+| TEMP | PF0 (ADC0) | 온도 TEMP 가변저항 가운데 핀 |
+| GAS | PF1 (ADC1) | 가스 GAS 가변저항 가운데 핀 |
+| FLAME | PD0 (INT0) | 불꽃 FLAME 푸시버튼 (반대쪽은 GND, 내부 풀업 사용) |
+| BTN | PD1 (INT1) | 복구 RESET 푸시버튼 (반대쪽은 GND) |
 | LED_G / LED_Y / LED_R | PA0 / PA1 / PA2 | 녹색 / 노랑 / 빨강 LED |
 | LCD_RS, LCD_E, LCD_D4~D7 | PC0, PC1, PC2~PC5 | HD44780 16x2 LCD (RW는 GND) |
 | SERVO | PB5 (OC1A) | 비상구 서보 신호선 (V+는 5V, Gnd는 GND) |
@@ -51,11 +71,11 @@ MCU에는 `../firmware/main.hex`가 자동으로 로드되도록 설정했습니
 - A: 전원만 켜고 그대로 둠
 - B: Temp 1000Ω
 - C: Gas 6000Ω (3초 안에 관찰)
-- D: Flame 버튼을 짧게 누름
+- D: 불꽃 FLAME 버튼을 짧게 누름
 - E: Gas 6000Ω로 3초 이상 기다림 → 서보 열림, 시리얼 터미널에 대피 메시지
 - F: Temp 1000Ω + Gas 6000Ω 동시에
-- G: 경보/대피 상태에서 Test/Reset 버튼
-- H: 대피 진입 직후 부저가 울리는 동안 Test/Reset 버튼
+- G: 경보/대피 상태에서 복구 RESET 버튼
+- H: 대피 진입 직후 부저가 울리는 동안 복구 RESET 버튼
 
 각 시나리오에서 LED·LCD·서보·시리얼 터미널 화면을 캡처해 두면 보고서의 "단계별 동작 증명"에 바로 쓸 수 있습니다.
 
