@@ -16,7 +16,7 @@ ATmega128 마이크로프로세서 텀 프로젝트 (2인 1조)
 1. [SimulIDE](https://simulide.com/p/downloads/) 1.1.0을 설치한다.
 2. SimulIDE에서 `simulation/fire_gas_system.sim1`을 연다.
 3. 전원 버튼을 누르면 `firmware/main.hex`가 자동으로 올라가고 LCD에 `STATUS: NORMAL`이 표시된다.
-4. 가변저항(Temp/Gas)과 버튼(Flame/Test-Reset)으로 상태를 바꿔 본다. 조작법은 `simulation/README.md`.
+4. 온도 서미스터 다이얼(°C), 가스 전압원 다이얼(V), 불꽃·복구 버튼으로 상태를 바꿔 본다. 조작법은 `simulation/README.md`.
 
 펌웨어를 고쳤다면 `firmware`에서 `make`로 다시 빌드한 뒤 시뮬레이션 전원을 껐다 켠다.
 
