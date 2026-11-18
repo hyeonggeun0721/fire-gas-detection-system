@@ -5,17 +5,37 @@ ATmega128 마이크로프로세서 텀 프로젝트 (2인 1조)
 ## 프로젝트 개요
 
 - **플랫폼**: ATmega128 (AVR-GCC 툴체인)
-- **시뮬레이터**: Proteus 또는 SimulIDE
+- **시뮬레이터**: SimulIDE 1.1.0-SR2 (`simulation/fire_gas_system.sim1`)
 - **기능**: 온도/가스/불꽃 센서로 화재를 감지 → 부저 경보 → 서보모터로 비상구 자동 개방
   → LCD에 대피 경로 표시 → UART로 PC(관제실)에 신고 메시지 전송
 - **제출 마감**: 11월 30일 (발표 후 제출)
+
+## 바로 실행해 보기
+
+1. [SimulIDE](https://simulide.com/p/downloads/) 1.1.0을 설치한다.
+2. SimulIDE에서 `simulation/fire_gas_system.sim1`을 연다.
+3. 전원 버튼을 누르면 `firmware/main.hex`가 자동으로 올라가고 LCD에 `STATUS: NORMAL`이 표시된다.
+4. 가변저항(Temp/Gas)과 버튼(Flame/Test-Reset)으로 상태를 바꿔 본다. 조작법은 `simulation/README.md`.
+
+펌웨어를 고쳤다면 `firmware`에서 `make`로 다시 빌드한 뒤 시뮬레이션 전원을 껐다 켠다.
+
+## 주요 문서
+
+| 문서 | 내용 |
+|---|---|
+| `docs/final-report.md` | 최종 보고서 (흐름도, 레지스터 설정 근거, 시뮬레이션 결과) |
+| `docs/test-scenarios.md` | 시나리오 A~H와 실행 결과 |
+| `docs/troubleshooting-simulide.md` | 시뮬레이션에서 겪은 문제 6가지와 해결 과정 |
+| `docs/requirements.md`, `docs/architecture.md` | 요구사항, 핀맵·회로 설계 |
+| `reports/week01.md` ~ `week15.md` | 주차별 개발 보고서 |
 
 ## 저장소 구조
 
 ```
 fire-gas-detection-system/
-  firmware/           # C 소스코드 (AVR-GCC)
-  docs/               # 회로도, 핀맵, 요구사항 명세, 상태 기계 다이어그램
+  firmware/           # C 소스코드 (AVR-GCC), main.hex, tests/ (호스트 단위 테스트)
+  simulation/         # SimulIDE 회로 파일
+  docs/               # 보고서, 요구사항, 핀맵, 시나리오, 트러블슈팅, 캡처
   reports/            # 주차별 보고서 (week01.md ~ week15.md)
   README.md
 ```
@@ -37,6 +57,7 @@ fire-gas-detection-system/
 - `[Week01] 버그: 풀업저항 미설정으로 인한 오동작 재현`
 - `[Week01] 수정: DDRx/PORTx 설정 수정 및 오류 해결`
 - `[Week01] 문서: 1주차 보고서 작성`
+- 시뮬레이션 검증 단계는 `[Sim]` 접두어를 쓴다.
 
 ## 브랜치 전략
 
@@ -62,6 +83,6 @@ fire-gas-detection-system/
 
 ## 참고
 
-- 실제 하드웨어 없이 시뮬레이터 기반으로 검증한다.
-- Proteus/SimulIDE 실행은 GUI 기반이라 자동화가 어려우므로, 각 단계에서 확인할 시뮬레이션 시나리오를 안내하고 직접 실행한 결과를 반영하는 방식으로 진행한다.
-- GitHub 원격 저장소는 추후 연결 예정 (현재는 로컬 저장소로 진행).
+- 실제 하드웨어 없이 SimulIDE와 simavr(타이밍 측정), 호스트 단위 테스트(`make test`)로 검증했다.
+- SimulIDE의 ATmega128 모델은 복귀 주소를 3바이트로 처리하므로, 빌드 결과에 `rcall .+0`이 없어야 한다
+  (`avr-objdump -d firmware/main.elf | grep -c "rcall\s*\.+0"` → 0). 자세한 내용은 `docs/troubleshooting-simulide.md`.
