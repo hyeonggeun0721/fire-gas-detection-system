@@ -24,11 +24,17 @@
  * _delay_ms() 기반 blocking beep()을 교체 - docs/test-scenarios.md 참조).
  *
  * 참고: HD44780 내장 폰트 ROM(A00)은 한글을 지원하지 않으므로 LCD 표시 문구는
- * 영문으로 작성하지만, UART는 PC 터미널이 UTF-8을 그대로 표시할 수 있으므로
- * 관제실 메시지는 한글로 작성한다.
+ * 영문으로 작성한다. UART 관제실 메시지도 SimulIDE 시리얼 터미널이 ASCII로
+ * 표시하므로 영문으로 작성한다.
+ *
+ * 시뮬레이션 트러블슈팅: SimulIDE 1.1.0의 ATmega128 모델은 호출 시 복귀 주소를
+ * 3바이트로 스택에 넣는다(실제 칩은 2바이트). avr-gcc -Os가 작은 지역 변수 공간을
+ * "rcall .+0"(복귀 주소를 밀어 넣는 방식)으로 확보한 함수는 끝에서 pop 개수가
+ * 맞지 않아 엉뚱한 주소로 복귀하고, MCU가 처음부터 다시 시작하는 일이 반복됐다.
+ * 그래서 snprintf()를 append_uint()/append_int()로 바꾸고, 지역 배열과
+ * 주소를 넘기는 지역 변수를 없앴다(static). 빌드 결과에 "rcall .+0"이 0개인지
+ * 확인한다 (docs/troubleshooting-simulide.md 참조).
  */
-
-#include <stdio.h>
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
@@ -113,6 +119,36 @@ static void gpio_init(void)
     uart_init();
 }
 
+/* 부호 없는 정수를 10진수 문자열로 p 위치에 붙이고, 다음 쓸 위치를 돌려준다.
+ * 지역 배열을 쓰지 않는다: avr-gcc -Os는 작은 지역 변수 공간을 "rcall .+0"로
+ * 확보하는데, SimulIDE의 ATmega128 모델은 이 rcall이 3바이트를 밀어 넣어
+ * 함수 끝의 pop 개수와 맞지 않게 된다 (docs/troubleshooting-simulide.md). */
+static char *append_uint(char *p, uint16_t v)
+{
+    uint16_t div = 10000;
+    uint8_t started = 0;
+    while (div > 1) {
+        uint8_t d = (uint8_t)(v / div);
+        if (d || started) {
+            *p++ = (char)('0' + d);
+            started = 1;
+        }
+        v %= div;
+        div /= 10;
+    }
+    *p++ = (char)('0' + v);
+    return p;
+}
+
+static char *append_int(char *p, int16_t v)
+{
+    if (v < 0) {
+        *p++ = '-';
+        return append_uint(p, (uint16_t)(-v));
+    }
+    return append_uint(p, (uint16_t)v);
+}
+
 static void show_state(fire_state_t state, int16_t temp_c, uint8_t gas_pct)
 {
     LED_PORT &= ~LED_ALL;
@@ -127,8 +163,15 @@ static void show_state(fire_state_t state, int16_t temp_c, uint8_t gas_pct)
             servo_close();
             lcd_string("STATUS: NORMAL");
             lcd_set_cursor(1, 0);
+            /* "T:25C G:10%" 형식 (최대 "T:-99C G:100%" = 13자) */
             char buf[17];
-            snprintf(buf, sizeof(buf), "T:%dC G:%u%%", temp_c, gas_pct);
+            char *p = buf;
+            *p++ = 'T'; *p++ = ':';
+            p = append_int(p, temp_c);
+            *p++ = 'C'; *p++ = ' '; *p++ = 'G'; *p++ = ':';
+            p = append_uint(p, gas_pct);
+            *p++ = '%';
+            *p = '\0';
             lcd_string(buf);
             break;
         }
@@ -147,7 +190,7 @@ static void show_state(fire_state_t state, int16_t temp_c, uint8_t gas_pct)
             lcd_string("!! ALARM !!");
             lcd_set_cursor(1, 0);
             lcd_string("Stand by");
-            uart_puts("[경보] 가스 또는 온도 임계값 초과, 혹은 불꽃 감지\r\n");
+            uart_puts("[ALARM] Gas/temperature over threshold or flame detected\r\n");
             break;
         case FIRE_STATE_EVACUATE:
             LED_PORT |= LED_ALARM;
@@ -156,7 +199,7 @@ static void show_state(fire_state_t state, int16_t temp_c, uint8_t gas_pct)
             lcd_string("!! EVACUATE !!");
             lcd_set_cursor(1, 0);
             lcd_string("EXIT NOW");
-            uart_puts("[대피] 화재 확정, 비상구 개방 - 즉시 대피 바랍니다\r\n");
+            uart_puts("[EVACUATE] Fire confirmed, exit door opened - evacuate now\r\n");
             break;
         default:
             break;
@@ -168,8 +211,8 @@ int main(void)
     gpio_init();
 
     fire_state_t state = FIRE_STATE_NORMAL;
-    uint16_t alarm_ticks = 0;
-    debounce_t button_db;
+    static uint16_t alarm_ticks = 0;  /* static: &alarm_ticks로 넘기므로 스택 대신 정적 메모리 */
+    static debounce_t button_db;  /* static: 스택 프레임(rcall .+0) 대신 정적 메모리 사용 */
     debounce_init(&button_db, 1);  /* 풀업으로 유휴 상태는 HIGH */
     uint8_t last_stable = 1;
 
