@@ -161,6 +161,7 @@ static void show_state(fire_state_t state, int16_t temp_c, uint8_t gas_pct)
         {
             LED_PORT |= LED_NORMAL;
             servo_close();
+            buzzer_stop();  /* 리셋으로 정상 복귀할 때 울리던 부저를 바로 끈다 */
             lcd_string("STATUS: NORMAL");
             lcd_set_cursor(1, 0);
             /* "T:25C G:10%" 형식 (최대 "T:-99C G:100%" = 13자) */

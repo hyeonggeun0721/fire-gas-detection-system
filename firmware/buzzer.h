@@ -41,6 +41,8 @@ uint8_t buzzer_seq_tick(buzzer_seq_t *seq);
 
 void buzzer_init(void);
 void buzzer_start(uint8_t beep_count);
+/* 재생 중인 패턴을 즉시 멈추고 부저를 끈다 (리셋 시 사용) */
+void buzzer_stop(void);
 void buzzer_tick(void);
 
 #endif

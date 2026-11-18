@@ -20,6 +20,12 @@ void buzzer_start(uint8_t beep_count)
     buzzer_seq_start(&s_seq, beep_count);
 }
 
+void buzzer_stop(void)
+{
+    buzzer_seq_start(&s_seq, 0);
+    BUZZER_PORT &= ~BUZZER_PIN;
+}
+
 void buzzer_tick(void)
 {
     if (buzzer_seq_tick(&s_seq))
