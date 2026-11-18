@@ -10,7 +10,7 @@
 | # | 증상 | 원인 | 해결 |
 |---|---|---|---|
 | 1 | Running인데 LED·LCD·UART 모두 반응 없음 | SimulIDE ATmega128 모델이 복귀 주소를 3바이트로 처리 → `rcall .+0` 프레임에서 스택 불일치 → 리셋 반복 | `snprintf` 제거, 지역 배열·주소를 넘기는 지역 변수 제거 (`rcall .+0` 0개) |
-| 2 | LCD에 `T:0C G:0%`, 가변저항을 돌려도 0 | ADC 기준전압을 AVCC로 골랐지만 회로에서 AREF 핀이 떠 있음 | AREF(PV1)도 5V에 연결 |
+| 2 | LCD에 `T:0C G:0%`, 가변저항을 돌려도 0 | ADC 기준전압을 AVCC로 골랐지만 회로에서 AREF 핀이 떠 있음 | AREF(PV1)도 5V에 연결, `adc_init()`에서 첫 변환 버림 |
 | 3 | (예방) UART 신고 메시지가 한글 | SimulIDE 시리얼 터미널은 ASCII로 표시 | 메시지를 영문으로 변경 |
 
 ---
@@ -136,9 +136,12 @@ SimulIDE 예제 회로(`m32_adc.sim1`)도 AVCC와 AREF를 둘 다 5V에 연결�
 정상 상태에서 녹색 LED와 `STATUS: NORMAL`, 가스 9%가 표시되고, Temp 다이얼을 올리면 노랑 LED와
 `STATUS: WARNING` / `High temp!`로 바뀌는 것까지 확인했다.
 
-남은 현상: 부팅 직후 첫 화면의 온도가 `T:0C`로 나온다. 전원 투입 후 첫 ADC 변환(채널 0)이 SimulIDE에서
-0으로 읽히는 것으로 보이며, 두 번째 변환(가스)부터는 정상이다. 상태 판정에는 영향이 없다
-(다이얼을 올리면 주의 상태로 정상 전환). `adc_init()`에서 버리는 변환을 한 번 해 두면 해결될 것으로 예상한다.
+추가로 부팅 직후 첫 화면의 온도만 `T:0C`로 나왔다. SimulIDE는 ADMUX를 쓰는 순간 AREF 핀 전압을
+기준전압으로 읽는데(`AvrAdc::setChannel()` → `updtVref()`), 전원 투입 직후 첫 판독 때는 그 핀 전압이
+아직 0V였다. 두 번째 판독(가스)부터는 정상이었다. `adc_init()`에서 버리는 변환을 한 번 수행해
+시간이 흐른 뒤 읽도록 고쳤다 (`firmware/adc.c`).
+
+![수정 후: 부팅 화면 T:19C G:9%](images/simulide/06_after_boot_fixed.jpg)
 
 ---
 
