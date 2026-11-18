@@ -82,7 +82,7 @@
 
 ## 시나리오 I — 관제실 원격 명령 (양방향 통신)
 
-- SimulIDE의 관제실 PC 창 **Send Text** 칸에 한 글자를 입력하고 Enter를 누른다. 회신은 오른쪽 Output 창에 표시된다.
+- SimulIDE의 관제실 PC 창 **Send Text** 칸에 한 글자를 입력하고 Enter를 누른다. MCU의 회신은 왼쪽 Input 창(PC가 받은 글자)에, PC가 보낸 글자는 오른쪽 Output 창에 표시된다.
 - 순서와 기대 결과:
 
 | 순서 | 입력 | 기대 결과 |
@@ -108,15 +108,21 @@ SimulIDE는 `simulation/fire_gas_system.sim1`, simavr는 SimulIDE의 3바이트 
 |---|---|---|---|
 | A 기본 부팅 | 통과 | SimulIDE | 녹색 LED, `STATUS: NORMAL` / `T:19C G:9%` |
 | B 온도만 상승 | 통과 | SimulIDE | 노랑 LED, `STATUS: WARNING` / `High temp!` |
-| C 가스만 상승 | 통과 | SimulIDE | 빨강 LED, `!! ALARM !!` / `Stand by`, 터미널 `[ALARM] ...` |
+| C 가스만 상승 | 통과 | SimulIDE, simavr | 빨강 LED, `!! ALARM !!` / `Stand by`, 터미널 `[ALARM] ...` |
 | D 불꽃 감지 | 통과 (수정 후) | SimulIDE, simavr | 버튼을 뗀 뒤에도 경보 유지, 약 3초 뒤 대피. 수정 전에는 5ms 만에 정상 복귀 |
-| E 대피 자동 격상 | 통과 | SimulIDE | 약 3초 뒤 `!! EVACUATE !!` / `EXIT NOW`, 서보 90° 개방, 터미널 `[EVACUATE] ...` |
-| F 온도+가스 동시 | 통과 | simavr | 경보를 거치지 않고 바로 대피 |
+| E 대피 자동 격상 | 통과 | SimulIDE, simavr | 약 3초 뒤 `!! EVACUATE !!` / `EXIT NOW`, 서보 90° 개방, 터미널 `[EVACUATE] ...` |
+| F 온도+가스 동시 | 통과 | SimulIDE, simavr | 경보를 거치지 않고 바로 대피 (SimulIDE: 50°C 상태에서 가스를 2.68V로 올리자 3초 대기 없이 `!! EVACUATE !!`) |
 | G 리셋 버튼 | 통과 (수정 후) | SimulIDE, simavr | 대피 → 정상 복귀, 서보 닫힘, 부저 즉시 정지 |
 | H 대피 직후 반응성 | 통과 (수정 후) | simavr | 대피 80ms 뒤 누른 버튼이 20ms 뒤 인식. 수정 전에는 UART 블로킹으로 약 70ms |
-| I 관제실 원격 명령 | 통과 | simavr | 1~8 모두 기대대로 회신. 명령 수신 후 5ms 안에 LED·서보 반영 (`T` 205→208ms, `R` 3704→3707ms) |
+| I 관제실 원격 명령 | 통과 | SimulIDE, simavr | 1~8 모두 기대대로 회신. 명령 수신 후 5ms 안에 LED·서보 반영 (`T` 205→208ms, `R` 3704→3707ms) |
 
 센서 교체 후 재확인 (2026-11-18): 온도를 NTC 서미스터, 가스를 전압원으로 바꾼 펌웨어로 simavr에서 A(20°C, 9%), B(45°C → 주의), C(가스 59% → 경보),
 F(동시 초과 → 즉시 대피), G(관제실 `R` 복구), I(`S` 회신)를 다시 실행해 모두 같은 결과를 얻었다.
 
-남은 확인: 시나리오 F, H, I는 SimulIDE 화면에서도 한 번 재현해 캡처를 남기면 보고서 근거로 좋다.
+SimulIDE 전체 재확인 (2026-11-18, 센서 교체·양방향 통신 펌웨어): A(20°C, `T:20C G:9%`), B(서미스터 83°C → 주의), C(가스 2.81V → 경보),
+D(불꽃 버튼을 뗀 뒤에도 경보 유지 → 약 3초 뒤 대피), E(가스 경보 → 3초 뒤 대피, 서보 개방, 가스를 0V로 내려도 대피 유지),
+F(50°C + 가스 2.68V → 즉시 대피), G(복구 버튼 → 정상, 서보 닫힘), I(S·T·T·C·R·O·C·x·s 전부 기대대로 회신)를 화면으로 확인했다.
+캡처: `docs/images/simulide/10`~`15`.
+
+H(대피 진입 80ms 뒤 버튼)는 사람 손으로 타이밍을 맞출 수 없어 simavr 측정 결과로만 근거를 남긴다.
+같은 날 simavr로 A~I를 한 번에 돌리는 회귀 테스트에서도 H는 대피 106ms 뒤 누른 버튼이 18ms 뒤 인식됐다.

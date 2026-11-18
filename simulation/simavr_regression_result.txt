@@ -1,0 +1,72 @@
+   [t=1ms] servo=?
+   [t=30ms] servo=CLOSED
+   [t=33ms] LED=NORMAL(G)
+
+== A: boot normal, S
+STATE=NORMAL T=20C G=9%
+
+== B: temp 45C(3.5V)
+   [t=307ms] LED=WARNING(Y)
+
+== B end: temp back 20C
+   [t=607ms] LED=NORMAL(G)
+
+== C: gas 3.0V
+   [t=807ms] LED=RED
+[ALARM] Gas/temperature over threshold or flame detected
+
+== C: gas back 0.5V (latched?) then R
+OK    [t=1605ms] LED=NORMAL(G)
+RESET
+
+== D: flame press 50ms
+   [t=2005ms] LED=RED
+[ALARM] Gas/temperature over threshold or flame detected
+   D check after release 450ms
+   [t=4995ms] servo=OPEN
+[EVACUATE] Fire confirmed, exit door opened - evacuate now
+
+== D/E: (expect evacuate ~3s after D) G: reset button
+   [t=5220ms] LED=NORMAL(G)
+   [t=5220ms] servo=CLOSED
+
+== E: gas 3.0V hold >3s
+   [t=6003ms] LED=RED
+[ALARM] Gas/temperature over threshold or flame detected
+   [t=8994ms] servo=OPEN
+[EVACUATE] Fire confirmed, exit door opened - evacuate now
+
+== H: reset button 80ms after evacuate (pressed @9100)
+   [t=9118ms] LED=NORMAL(G)
+   [t=9118ms] servo=CLOSED
+
+== F: temp 3.5V + gas 3.0V together
+   [t=10007ms] LED=RED
+   [t=10007ms] servo=OPEN
+[EVACUATE] Fire confirmed, exit door opened - evacuate now
+OK    [t=10306ms] LED=NORMAL(G)
+   [t=10306ms] servo=CLOSED
+RESET
+
+== I: S T T (wait 3s) C S R O C x s
+STATE=NORMAL T=20C G=9%
+OK    [t=11105ms] LED=RED
+TEST -> ALARM
+[ALARM] Gas/temperature over threshold or flame detected
+ERR ALREADY ALARM
+   [t=14100ms] servo=OPEN
+[EVACUATE] Fire confirmed, exit door opened - evacuate now
+ERR EVACUATING - DOOR STAYS OPEN
+STATE=EVACUATE T=20C G=9%
+OK    [t=14704ms] LED=NORMAL(G)
+   [t=14704ms] servo=CLOSED
+RESET
+O   [t=14807ms] servo=OPEN
+K DOOR OPEN
+O   [t=14906ms] servo=CLOSED
+K DOOR CLOSE
+ERR ? (S/R/T/O/C)
+STATE=NORMAL T=20C G=9%
+
+buzzer rising edges total: 13
+DONE
