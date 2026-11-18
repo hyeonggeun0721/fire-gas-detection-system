@@ -180,7 +180,7 @@
 
 <item itemtype="TextComponent" CircId="TextComponent-825" mainComp="false" Show_id="false" Show_Val="false" Pos="300,370" rotation="0" hflip="1" vflip="1" label="TextComponent-825" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Margin="2 _px" Border="0 _px" Color="#ffffff" Opacity="0" Font="Apple SD Gothic Neo" Font_Color="#333333" Font_Size="10 _px" Fixed_Width="false" Text="전원 5V / GND" />
 
-<item itemtype="TextComponent" CircId="TextComponent-826" mainComp="false" Show_id="false" Show_Val="false" Pos="-594,150" rotation="0" hflip="1" vflip="1" label="TextComponent-826" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Margin="2 _px" Border="0 _px" Color="#ffffff" Opacity="0" Font="Apple SD Gothic Neo" Font_Color="#333333" Font_Size="10 _px" Fixed_Width="false" Text="UART 9600bps&#xa;경보·대피 메시지 수신" />
+<item itemtype="TextComponent" CircId="TextComponent-826" mainComp="false" Show_id="false" Show_Val="false" Pos="-594,130" rotation="0" hflip="1" vflip="1" label="TextComponent-826" idLabPos="-16,-24" labelrot="0" valLabPos="0,0" valLabRot="0" Margin="2 _px" Border="0 _px" Color="#ffffff" Opacity="0" Font="Apple SD Gothic Neo" Font_Color="#333333" Font_Size="10 _px" Fixed_Width="false" Text="UART 9600bps 양방향&#xa;수신: 경보·대피 메시지&#xa;명령 (Send Text 칸 + Enter)&#xa; S 상태조회   R 원격복구&#xa; T 화재시험   O/C 비상구" />
 
 <item itemtype="Connector" uid="Connector-1002" startpinid="mega128-1-RST" endpinid="Tunnel-1001-pin" pointList="40,160,40,176" />
 

@@ -9,7 +9,7 @@
  *   PD0(INT0): 불꽃 센서 (풀업, 활성 LOW, 하강 엣지 인터럽트)
  *   PD1: 테스트 버튼 (풀업, 활성 LOW) - 강제로 정상 상태로 리셋
  *   PD4: 부저
- *   PE1(TXD0): UART 송신 (PC 관제실)
+ *   PE1(TXD0) / PE0(RXD0): UART 송수신 (PC 관제실)
  *   PF0(ADC0): 온도 센서   PF1(ADC1): 가스 센서
  *
  * 매 5ms 틱(Timer0)마다 온도/가스 센서를 읽고, 불꽃 감지 플래그와 함께
@@ -19,6 +19,8 @@
  * LED_ALARM 하나를 공유하며, LCD 문구와 부저 패턴, 서보 개폐로 구분한다.
  * 테스트 버튼은 시뮬레이션 시나리오를 위해 강제로 정상 상태로 리셋한다.
  * 경보/대피 상태에 진입할 때 UART로 PC 관제실에 알림 메시지를 전송한다.
+ * 관제실 PC는 한 글자 명령으로 수신반을 원격 조작할 수 있다 (handle_command):
+ *   S 상태 조회 / R 원격 복구 / T 화재 시험 / O 비상구 열기 / C 비상구 닫기
  *
  * 부저는 buzzer_tick()으로 매 5ms 틱마다 논블로킹으로 재생한다(14단계에서
  * _delay_ms() 기반 blocking beep()을 교체 - docs/test-scenarios.md 참조).
@@ -207,6 +209,79 @@ static void show_state(fire_state_t state, int16_t temp_c, uint8_t gas_pct)
     }
 }
 
+static const char *state_name(fire_state_t state)
+{
+    switch (state)
+    {
+        case FIRE_STATE_NORMAL:   return "NORMAL";
+        case FIRE_STATE_WARNING:  return "WARNING";
+        case FIRE_STATE_ALARM:    return "ALARM";
+        case FIRE_STATE_EVACUATE: return "EVACUATE";
+        default:                  return "?";
+    }
+}
+
+/* 관제실 PC가 보낸 한 글자 명령을 처리하고, 바뀐 상태를 돌려준다.
+ * 회신 문자열은 static 버퍼에 만든다 (지역 배열 -> rcall .+0 회피). */
+static fire_state_t handle_command(char cmd, fire_state_t state, int16_t temp_c,
+                                   uint8_t gas_pct, uint16_t *alarm_ticks)
+{
+    static char reply[40];
+    char *p;
+
+    switch (cmd)
+    {
+        case 'S': case 's':  /* 상태 조회: "STATE=NORMAL T=19C G=9%" */
+            p = reply;
+            for (const char *n = "STATE="; *n; n++) *p++ = *n;
+            for (const char *n = state_name(state); *n; n++) *p++ = *n;
+            *p++ = ' '; *p++ = 'T'; *p++ = '=';
+            p = append_int(p, temp_c);
+            *p++ = 'C'; *p++ = ' '; *p++ = 'G'; *p++ = '=';
+            p = append_uint(p, gas_pct);
+            *p++ = '%'; *p++ = '\r'; *p++ = '\n';
+            *p = '\0';
+            uart_puts(reply);
+            break;
+        case 'R': case 'r':  /* 원격 복구: 복구 RESET 버튼과 같은 동작 */
+            uart_puts("OK RESET\r\n");
+            state = FIRE_STATE_NORMAL;
+            *alarm_ticks = 0;
+            show_state(state, temp_c, gas_pct);
+            break;
+        case 'T': case 't':  /* 화재 시험: 경보 상태로 전환 (3초 뒤 대피, R로 해제) */
+            if (state == FIRE_STATE_ALARM || state == FIRE_STATE_EVACUATE)
+            {
+                uart_puts("ERR ALREADY ALARM\r\n");
+                break;
+            }
+            uart_puts("OK TEST -> ALARM\r\n");
+            state = FIRE_STATE_ALARM;
+            *alarm_ticks = 0;
+            show_state(state, temp_c, gas_pct);
+            break;
+        case 'O': case 'o':  /* 비상구 수동 열기 */
+            servo_open();
+            uart_puts("OK DOOR OPEN\r\n");
+            break;
+        case 'C': case 'c':  /* 비상구 수동 닫기: 대피 중에는 거부 (대피로 확보가 우선) */
+            if (state == FIRE_STATE_EVACUATE)
+            {
+                uart_puts("ERR EVACUATING - DOOR STAYS OPEN\r\n");
+                break;
+            }
+            servo_close();
+            uart_puts("OK DOOR CLOSE\r\n");
+            break;
+        case '\r': case '\n': case ' ':  /* Enter/공백은 무시 */
+            break;
+        default:
+            uart_puts("ERR ? (S/R/T/O/C)\r\n");
+            break;
+    }
+    return state;
+}
+
 int main(void)
 {
     gpio_init();
@@ -258,5 +333,12 @@ int main(void)
             show_state(state, temp_c, gas_pct);
         }
         last_stable = stable;
+
+        /* 관제실 PC 명령 처리 (한 틱에 받은 글자를 모두 처리) */
+        static char rx;  /* static: 주소를 넘기는 변수 -> 스택 프레임(rcall .+0) 회피 */
+        while (uart_getc_nb(&rx))
+        {
+            state = handle_command(rx, state, temp_c, gas_pct, &alarm_ticks);
+        }
     }
 }

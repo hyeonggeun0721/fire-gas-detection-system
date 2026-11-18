@@ -46,7 +46,7 @@ Rectangle·TextComponent(그래픽 부품)라 **전기적으로는 아무 영향
 | LCD_RS, LCD_E, LCD_D4~D7 | PC0, PC1, PC2~PC5 | HD44780 16x2 LCD (RW는 GND) |
 | SERVO | PB5 (OC1A) | 비상구 서보 신호선 (V+는 5V, Gnd는 GND) |
 | BUZ | PD4 | 부저(Audio Out) + 주황 LED (소리가 안 나도 LED로 확인) |
-| TXD / RXD | PE1 / PE0 | 시리얼 터미널 (9600bps, 8N1) |
+| TXD / RXD | PE1 / PE0 | 시리얼 터미널 (9600bps, 8N1, 양방향) |
 | VCC | RST, AVCC | 5V 레일 (리셋 해제, ADC 기준전압 AVCC) |
 | GND | — | 그라운드 |
 
@@ -78,6 +78,20 @@ Rectangle·TextComponent(그래픽 부품)라 **전기적으로는 아무 영향
 - H: 대피 진입 직후 부저가 울리는 동안 복구 RESET 버튼
 
 각 시나리오에서 LED·LCD·서보·시리얼 터미널 화면을 캡처해 두면 보고서의 "단계별 동작 증명"에 바로 쓸 수 있습니다.
+
+## 관제실 PC에서 원격 조작 (시나리오 I)
+
+관제실 PC 창의 **Send Text** 칸에 한 글자를 입력하고 Enter를 누르면, 회신이 오른쪽 **Output** 창에 나옵니다.
+
+| 입력 | 동작 | 회신 |
+|---|---|---|
+| `S` | 상태 조회 | `STATE=NORMAL T=19C G=9%` |
+| `R` | 원격 복구 (복구 RESET 버튼과 같음) | `OK RESET` |
+| `T` | 화재 시험 → 경보, 3초 뒤 대피 (`R`로 해제) | `OK TEST -> ALARM` |
+| `O` / `C` | 비상구 수동 열기 / 닫기 | `OK DOOR OPEN` / `OK DOOR CLOSE` |
+| 그 밖의 글자 | 무시 | `ERR ? (S/R/T/O/C)` |
+
+대피 중에는 `C`(문 닫기)를 거부합니다 (`ERR EVACUATING - DOOR STAYS OPEN`). 소문자도 됩니다.
 
 ## 알아둘 점
 
