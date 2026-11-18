@@ -22,8 +22,10 @@ typedef enum
 #define ALARM_TO_EVACUATE_TICKS  600  /* 5ms 틱 기준 약 3초간 경보 지속 시 "대피"로 격상 */
 
 /* 센서 값과 이전 상태로부터 다음 상태를 계산한다.
- * alarm_ticks: 경보 상태가 몇 틱째 연속되는지 누적하는 카운터. 호출자가 보관하고
- * 이 함수가 갱신한다(경보 상태가 아니면 0으로 리셋됨). */
+ * 경보(ALARM)와 대피(EVACUATE)는 래치된다: 한 번 들어가면 센서 값이 정상으로
+ * 돌아와도 유지되고, 호출자(main.c)가 테스트/리셋 버튼으로 NORMAL로 되돌린다.
+ * alarm_ticks: 경보 상태가 몇 틱째 지속되는지 누적하는 카운터. 호출자가 보관하고
+ * 이 함수가 갱신한다(경보·대피가 아닐 때 0으로 리셋됨). */
 fire_state_t fire_evaluate(fire_state_t prev_state, int16_t temp_c, uint8_t gas_pct,
                            uint8_t flame_detected, uint16_t *alarm_ticks);
 

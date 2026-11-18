@@ -108,6 +108,49 @@ int main(void)
         if (s != FIRE_STATE_EVACUATE) { printf("FAIL\n"); failures++; }
     }
 
+
+    /* 시나리오 5 (시뮬레이션 검증 시나리오 D): 불꽃은 한 틱만 감지되고 사라져도
+     * 경보가 유지되어야 한다(래치). */
+    {
+        uint16_t ticks = 0;
+        fire_state_t s = fire_evaluate(FIRE_STATE_NORMAL, 25, 10, 1, &ticks);  /* 불꽃 감지 */
+        s = fire_evaluate(s, 25, 10, 0, &ticks);                              /* 다음 틱: 불꽃 플래그 소비됨 */
+        printf("[시나리오5] 불꽃 1틱 후 플래그 해제 -> %s (기대값: ALARM 유지)\n", state_name(s));
+        if (s != FIRE_STATE_ALARM) { printf("FAIL\n"); failures++; }
+    }
+
+    /* 시나리오 6: 경보 중 가스가 정상으로 내려가도 경보 유지, 그대로 3초 지나면 대피 */
+    {
+        uint16_t ticks = 0;
+        fire_state_t s = fire_evaluate(FIRE_STATE_NORMAL, 25, 60, 0, &ticks);  /* 경보 진입 */
+        s = fire_evaluate(s, 25, 10, 0, &ticks);                              /* 가스 정상으로 */
+        int held = (s == FIRE_STATE_ALARM);
+        for (uint16_t i = 0; i < ALARM_TO_EVACUATE_TICKS; i++)
+        {
+            s = fire_evaluate(s, 25, 10, 0, &ticks);
+        }
+        printf("[시나리오6] 경보 후 가스 정상 -> 직후 %s, %u틱 후 %s (기대값: ALARM 유지 후 EVACUATE)\n",
+               held ? "ALARM" : "해제됨", ALARM_TO_EVACUATE_TICKS, state_name(s));
+        if (!held || s != FIRE_STATE_EVACUATE) { printf("FAIL\n"); failures++; }
+    }
+
+    /* 시나리오 7: 대피는 센서가 모두 정상이어도 유지 (리셋은 main.c의 버튼 처리 몫) */
+    {
+        uint16_t ticks = 0;
+        fire_state_t s = fire_evaluate(FIRE_STATE_EVACUATE, 25, 10, 0, &ticks);
+        printf("[시나리오7] 대피 중 센서 정상 -> %s (기대값: EVACUATE 유지)\n", state_name(s));
+        if (s != FIRE_STATE_EVACUATE) { printf("FAIL\n"); failures++; }
+    }
+
+    /* 시나리오 8: 주의(온도)는 래치하지 않음 -> 온도가 내려가면 정상 */
+    {
+        uint16_t ticks = 0;
+        fire_state_t s = fire_evaluate(FIRE_STATE_NORMAL, 45, 10, 0, &ticks);
+        s = fire_evaluate(s, 25, 10, 0, &ticks);
+        printf("[시나리오8] 주의 후 온도 정상 -> %s (기대값: NORMAL)\n", state_name(s));
+        if (s != FIRE_STATE_NORMAL) { printf("FAIL\n"); failures++; }
+    }
+
     if (failures > 0)
     {
         printf("FAIL: %d개 시나리오 실패\n", failures);
