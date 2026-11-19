@@ -3,7 +3,7 @@
    [t=33ms] LED=NORMAL(G)
 
 == A: boot normal, S
-STATE=NORMAL T=20C G=9%
+STATE=NORMAL T=20C G=10%
 
 == B: temp 45C(3.5V)
    [t=307ms] LED=WARNING(Y)
@@ -49,7 +49,7 @@ OK    [t=10306ms] LED=NORMAL(G)
 RESET
 
 == I: S T T (wait 3s) C S R O C x s
-STATE=NORMAL T=20C G=9%
+STATE=NORMAL T=20C G=10%
 OK    [t=11105ms] LED=RED
 TEST -> ALARM
 [ALARM] Gas/temperature over threshold or flame detected
@@ -57,7 +57,7 @@ ERR ALREADY ALARM
    [t=14100ms] servo=OPEN
 [EVACUATE] Fire confirmed, exit door opened - evacuate now
 ERR EVACUATING - DOOR STAYS OPEN
-STATE=EVACUATE T=20C G=9%
+STATE=EVACUATE T=20C G=10%
 OK    [t=14704ms] LED=NORMAL(G)
    [t=14704ms] servo=CLOSED
 RESET
@@ -66,7 +66,7 @@ K DOOR OPEN
 O   [t=14906ms] servo=CLOSED
 K DOOR CLOSE
 ERR ? (S/R/T/O/C)
-STATE=NORMAL T=20C G=9%
+STATE=NORMAL T=20C G=10%
 
 buzzer rising edges total: 13
 DONE

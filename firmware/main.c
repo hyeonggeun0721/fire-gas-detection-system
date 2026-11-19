@@ -65,6 +65,8 @@
 #define TIMER0_TARGET_HZ 200  /* 5ms 주기 */
 #define TIMER0_OCR (F_CPU / TIMER0_PRESCALER / TIMER0_TARGET_HZ - 1)
 
+#define LCD_REFRESH_TICKS 100  /* 5ms x 100 = 0.5초 */
+
 #define LED_PORT PORTA
 #define LED_DDR  DDRA
 #define LED_NORMAL   (1 << PA0)
@@ -151,6 +153,27 @@ static char *append_int(char *p, int16_t v)
     return append_uint(p, (uint16_t)v);
 }
 
+/* LCD 2행에 "T:25C G:10%"를 쓰고 나머지 칸은 공백으로 채운다 (16칸).
+ * 화면을 지우지 않고 덮어쓰므로 0.5초마다 갱신해도 깜빡이지 않는다.
+ * 버퍼는 static: 지역 배열은 rcall .+0 프레임을 만든다 (docs/troubleshooting-simulide.md). */
+static void show_values(int16_t temp_c, uint8_t gas_pct)
+{
+    static char line[17];
+    char *p = line;
+    *p++ = 'T'; *p++ = ':';
+    p = append_int(p, temp_c);
+    *p++ = 'C'; *p++ = ' '; *p++ = 'G'; *p++ = ':';
+    p = append_uint(p, gas_pct);
+    *p++ = '%';
+    while (p < line + 16)
+    {
+        *p++ = ' ';
+    }
+    *p = '\0';
+    lcd_set_cursor(1, 0);
+    lcd_string(line);
+}
+
 static void show_state(fire_state_t state, int16_t temp_c, uint8_t gas_pct)
 {
     LED_PORT &= ~LED_ALL;
@@ -165,26 +188,15 @@ static void show_state(fire_state_t state, int16_t temp_c, uint8_t gas_pct)
             servo_close();
             buzzer_stop();  /* 리셋으로 정상 복귀할 때 울리던 부저를 바로 끈다 */
             lcd_string("STATUS: NORMAL");
-            lcd_set_cursor(1, 0);
-            /* "T:25C G:10%" 형식 (최대 "T:-99C G:100%" = 13자) */
-            char buf[17];
-            char *p = buf;
-            *p++ = 'T'; *p++ = ':';
-            p = append_int(p, temp_c);
-            *p++ = 'C'; *p++ = ' '; *p++ = 'G'; *p++ = ':';
-            p = append_uint(p, gas_pct);
-            *p++ = '%';
-            *p = '\0';
-            lcd_string(buf);
+            show_values(temp_c, gas_pct);
             break;
         }
         case FIRE_STATE_WARNING:
             LED_PORT |= LED_WARNING;
             servo_close();
             buzzer_start(1);
-            lcd_string("STATUS: WARNING");
-            lcd_set_cursor(1, 0);
-            lcd_string("High temp!");
+            lcd_string("WARN: HIGH TEMP");
+            show_values(temp_c, gas_pct);
             break;
         case FIRE_STATE_ALARM:
             LED_PORT |= LED_ALARM;
@@ -333,6 +345,22 @@ int main(void)
             show_state(state, temp_c, gas_pct);
         }
         last_stable = stable;
+
+        /* 정상·주의 상태에서는 LCD 2행의 온도·가스 값을 0.5초(100틱)마다 다시 쓴다.
+         * 상태가 바뀔 때만 쓰면 다이얼을 천천히 돌릴 때 LCD 값이 이전 값으로 남는다. */
+        static uint8_t lcd_refresh_ticks;
+        if (state == FIRE_STATE_NORMAL || state == FIRE_STATE_WARNING)
+        {
+            if (++lcd_refresh_ticks >= LCD_REFRESH_TICKS)
+            {
+                lcd_refresh_ticks = 0;
+                show_values(temp_c, gas_pct);
+            }
+        }
+        else
+        {
+            lcd_refresh_ticks = 0;
+        }
 
         /* 관제실 PC 명령 처리 (한 틱에 받은 글자를 모두 처리) */
         static char rx;  /* static: 주소를 넘기는 변수 -> 스택 프레임(rcall .+0) 회피 */
